@@ -20,17 +20,17 @@ class TabBarBloc extends Bloc<TabBarEvent, TabBarState> {
     Emitter<TabBarState> emit,
   ) async {
     try {
-      await _initializeSocketAndAuth();
+      await _initializeAuth();
     } catch (error) {
       logger.error("TabBar error:", error: error);
     }
   }
 
-  Future<void> _initializeSocketAndAuth() async {
+  Future<void> _initializeAuth() async {
     try {
       await locator<AppInitializer>().ready;
     } catch (e) {
-      logger.error("Socket initialization/auth failed", error: e);
+      logger.error("Auth failed", error: e);
     }
   }
 

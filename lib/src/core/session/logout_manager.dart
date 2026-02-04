@@ -100,15 +100,6 @@ class LogoutManager {
           return;
         }
       }
-
-      // await restClient.request<void>(
-      //   bypassInitializer: true,
-      //   apiModel: ApiModel(
-      //     serviceType: ServiceType.portal,
-      //     method: Method.delete,
-      //     pathUrl: Requests.sessions,
-      //   ),
-      // );
     } catch (e, stack) {
       logger.error("Logout REST call failed (ignored once)",
           error: e, stackTrace: stack);
