@@ -1,0 +1,28 @@
+
+analyzer:
+  errors:
+    deprecated_member_use: ignore
+    type_literal_in_constant_pattern: ignore
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    - prefer_const_literals_to_create_immutables
+    - prefer_const_declarations
+
+    - prefer_final_locals           # Prefer using final for local variables
+    - avoid_print                   # Avoid using print statements
+    - prefer_const_constructors     # Prefer const constructors where possible
+    - avoid_void_async              # Avoid async functions that return void
+    - cancel_subscriptions          # Cancel subscriptions to avoid memory leaks
+    - prefer_is_empty               # Prefer isEmpty over checking length == 0
+    - avoid_classes_with_only_static_members # Avoid classes with only static members
+    - avoid_slow_async_io             # Avoid using slow async I/O operations (e.g. read large files fully)
+    - prefer_typing_uninitialized_variables # Prefer specifying types for uninitialized variables
+
+    - use_super_parameters                 # Use super-initializer parameters where applicable
+    - prefer_final_in_for_each             # Prefer final in for-each loop variables
+    - avoid_unnecessary_containers         # Avoid using Containers when not needed
+    - prefer_expression_function_bodies    # Use => instead of {} for simple functions
+    - no_logic_in_create_state             # Avoid business logic in createState (stateful widgets)
+    # - unnecessary_lambdas                  # Avoid wrapping functions unnecessarily in lambdas

@@ -1,0 +1,1 @@
+extension DoubleFormatting on num {}
