@@ -1,6 +1,9 @@
 import 'dart:async';
+
+import 'package:injectable/injectable.dart';
 import 'package:sample/src/services/logging/logger.dart';
 
+@lazySingleton
 class AccountManager {
   String? _accountId;
   Completer<void> _readyCompleter = Completer<void>();

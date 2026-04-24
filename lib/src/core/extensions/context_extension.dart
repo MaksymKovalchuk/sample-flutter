@@ -1,6 +1,6 @@
-import 'package:sample/src/core/localization/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:sample/src/core/localization/l10n/app_localizations.dart';
 
 /// List of extensions for [BuildContext]
 extension ContextExtension on BuildContext {
@@ -33,8 +33,7 @@ extension ContextExtension on BuildContext {
   /// Maybe inherit specific aspect from [InheritedModel].
   T? maybeInheritFrom<A extends Object, T extends InheritedModel<A>>(
     A? aspect,
-  ) =>
-      InheritedModel.inheritFrom<T>(this, aspect: aspect);
+  ) => InheritedModel.inheritFrom<T>(this, aspect: aspect);
 
   /// Inherit specific aspect from [InheritedModel].
   T inheritFrom<A extends Object, T extends InheritedModel<A>>({A? aspect}) =>

@@ -1,25 +1,22 @@
-import 'package:sample/src/core/bloc/app_bloc.dart';
-import 'package:sample/src/core/di/locator.dart';
-import 'package:sample/src/core/navigation/core/auth_guard.dart';
-import 'package:sample/src/core/navigation/core/navigation_service.dart';
-import 'package:sample/src/core/navigation/core/router_refresh_stream.dart';
-import 'package:sample/src/core/navigation/core/transitions.dart';
 import 'package:flutter/material.dart';
-import 'package:sample/src/core/navigation/core/route_names.dart';
-import 'package:sample/src/feature/tab_bar/tab_bar_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sample/src/core/bloc/app_bloc.dart';
+import 'package:sample/src/core/di/injection.dart';
+import 'package:sample/src/core/navigation/auth_guard.dart';
+import 'package:sample/src/core/navigation/navigation_service.dart';
+import 'package:sample/src/core/navigation/route_names.dart';
+import 'package:sample/src/core/navigation/router_refresh_stream.dart';
+import 'package:sample/src/core/navigation/transitions.dart';
+import 'package:sample/src/feature/tab_bar/tab_bar_page.dart';
 
 final GoRouter router = GoRouter(
   navigatorKey: rootNavigatorKey,
   initialLocation: RouteNames.init,
-  refreshListenable: GoRouterRefreshStream(locator<AppBloc>().stream),
-  redirect: (BuildContext context, GoRouterState state) {
-    final appBloc = context.read<AppBloc>();
-    final appState = appBloc.state;
-    final path = state.uri.path;
-
-    return AuthGuard.redirectLogic(appBloc, appState, path);
+  refreshListenable: GoRouterRefreshStream(getIt<AppBloc>().stream),
+  redirect: (context, state) {
+    final appState = context.read<AppBloc>().state;
+    return AuthGuard.redirectLogic(appState, state.uri.path);
   },
   routes: [
     GoRoute(
@@ -37,7 +34,9 @@ final GoRouter router = GoRouter(
       pageBuilder: (context, state) {
         final uuid = state.uri.queryParameters['uuid'];
         return fadeTransitionPage(
-            name: RouteNames.tabBar, child: TabBarPage(uuid: uuid));
+          name: RouteNames.tabBar,
+          child: TabBarPage(uuid: uuid),
+        );
       },
     ),
   ],

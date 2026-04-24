@@ -6,9 +6,9 @@ class AppException implements Exception {
 }
 
 class ApiException implements Exception {
+  ApiException(this.message, {this.status});
   final String message;
   final int? status;
-  ApiException(this.message, {this.status});
   @override
   String toString() => message;
 }

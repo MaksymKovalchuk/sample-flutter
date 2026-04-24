@@ -1,5 +1,5 @@
-import 'package:sample/src/core/navigation/core/navigation_service.dart';
 import 'package:flutter/services.dart';
+import 'package:sample/src/core/navigation/navigation_service.dart';
 
 enum DeviceType { mobile, tablet }
 

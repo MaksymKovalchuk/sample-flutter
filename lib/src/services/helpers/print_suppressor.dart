@@ -31,6 +31,6 @@ class PrintSuppressor {
     'x-content-type-options',
     'transfer-encoding: chunked',
     'flutter: Webview Console LOG:',
-    'unhandled element <filter/>; Picture key: Svg loader'
+    'unhandled element <filter/>; Picture key: Svg loader',
   ];
 }

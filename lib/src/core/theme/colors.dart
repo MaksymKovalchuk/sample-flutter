@@ -152,8 +152,10 @@ class ColorCache {
   // status-warning-text
   late final Color cWarningText = _dynamic(0xFFFFB200, 0xFFFEC84B);
   // status-warning-background
-  late final Color cWarningBg =
-      _dynamic(0xFFFFB200, 0xFFFEC84B).withValues(alpha: 0.1);
+  late final Color cWarningBg = _dynamic(
+    0xFFFFB200,
+    0xFFFEC84B,
+  ).withValues(alpha: 0.1);
 
   // -- Green --
   // button-trade-buy
@@ -161,8 +163,10 @@ class ColorCache {
   // status-success
   late final Color cStatusSuccess = _dynamic(0xFF1ABC9C, 0xFF1ABC9C);
   // status-success-background
-  late final Color cSuccessBg =
-      _dynamic(0xFF1ABC9C, 0xFF1ABC9C).withValues(alpha: 0.1);
+  late final Color cSuccessBg = _dynamic(
+    0xFF1ABC9C,
+    0xFF1ABC9C,
+  ).withValues(alpha: 0.1);
 
   // -- Red --
   // button-trade-sell
@@ -170,14 +174,20 @@ class ColorCache {
   // status-error
   late final Color cStatusError = _dynamic(0xFFDD2252, 0xFFE9305B);
   // status-error-field-stroke
-  late final Color cStatusErrorFieldStroke =
-      _dynamic(0xFFDD2252, 0xFFE9305B).withValues(alpha: 0.5);
+  late final Color cStatusErrorFieldStroke = _dynamic(
+    0xFFDD2252,
+    0xFFE9305B,
+  ).withValues(alpha: 0.5);
   // status-error-background
-  late final Color cStatusErrorBg =
-      _dynamic(0xFFDD2252, 0xFFE9305B).withValues(alpha: 0.1);
+  late final Color cStatusErrorBg = _dynamic(
+    0xFFDD2252,
+    0xFFE9305B,
+  ).withValues(alpha: 0.1);
   // status-error-field
-  late final Color cStatusErrorField =
-      _dynamic(0xFFDD2252, 0xFFE9305B).withValues(alpha: 0.05);
+  late final Color cStatusErrorField = _dynamic(
+    0xFFDD2252,
+    0xFFE9305B,
+  ).withValues(alpha: 0.05);
 
   late final Color cBlack = const Color(0xFF000000);
   late final Color cAsset1 = const Color(0xFF65E1CE);
@@ -198,9 +208,11 @@ class ColorCache {
   late final Color cGreenBanner = _dynamic(0xFFE2E1DB, 0xFF112723);
   late final Color cBlueBanner = _dynamic(0xFFE2E1DB, 0xFF151C34);
 
-  String colorToHex(Color color, {bool leadingHashSign = true}) =>
-      '${leadingHashSign ? '#' : ''}'
-      '${color.red.toRadixString(16).padLeft(2, '0')}'
-      '${color.green.toRadixString(16).padLeft(2, '0')}'
-      '${color.blue.toRadixString(16).padLeft(2, '0')}';
+  String colorToHex(Color color, {bool leadingHashSign = true}) {
+    int component(double v) => (v * 255.0).round().clamp(0, 255);
+    return '${leadingHashSign ? '#' : ''}'
+        '${component(color.r).toRadixString(16).padLeft(2, '0')}'
+        '${component(color.g).toRadixString(16).padLeft(2, '0')}'
+        '${component(color.b).toRadixString(16).padLeft(2, '0')}';
+  }
 }

@@ -5,8 +5,8 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.5 <4.0.0"
-  flutter: ">=3.10.5 <4.0.0"
+  sdk: ">=3.8.0 <4.0.0"
+  flutter: ">=3.32.0 <4.0.0"
   
 dependencies:
   # Flutter SDK
@@ -42,9 +42,17 @@ dependencies:
   get_it: ^9.0.5
   equatable: ^2.0.7
   flutter_local_notifications: ^19.5.0
-  json_serializable: ^6.11.1
-  json_annotation: ^4.9.0
   go_router: ^16.3.0
+
+  # Models / Serialization
+  freezed_annotation: ^3.0.0
+  json_annotation: ^4.10.0
+
+  # Env / Config
+  envied: ^1.1.1
+
+  # DI
+  injectable: ^2.5.0
 
   # Utils
   url_launcher: ^6.3.2
@@ -74,37 +82,16 @@ dev_dependencies:
   # Lints
   flutter_lints: ^6.0.0
 
-  # Utils
-  flutter_flavorizr: ^2.4.1
+  # Tooling
+  args: ^2.5.0
 
   # Codegen
   hive_ce_generator: ^1.10.0
   build_runner: ^2.10.1
-
-flavorizr:
-  app:
-    android:
-      flavorDimensions: "flavor-type"
-    ios:
-
-  flavors:
-    prod:
-      app:
-        name: "sample"
-
-      android:
-        applicationId: "com.sample.app"
-      ios:
-        bundleId: "com.sample.app"
-
-    dev:
-      app:
-        name: "sample-Dev"
-
-      android:
-        applicationId: "com.sample.app.dev"
-      ios:
-        bundleId: "com.sample.app.dev"
+  freezed: ^3.0.0
+  json_serializable: ^6.11.1
+  envied_generator: ^1.1.1
+  injectable_generator: ^2.7.0
 
 flutter:
   generate: true
@@ -114,12 +101,6 @@ flutter:
     - assets/images/
 
   fonts:
-  - family: Nunito
-    fonts:
-      - asset: fonts/Nunito-Bold.ttf
-      - asset: fonts/Nunito-SemiBold.ttf
-      - asset: fonts/Nunito-Regular.ttf
-
   - family: RobotoFlex
     fonts:
       - asset: fonts/RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf

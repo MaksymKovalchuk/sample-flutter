@@ -1,15 +1,16 @@
 import 'dart:async';
-import 'package:sample/src/services/logging/logger.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:sample/src/services/logging/logger.dart';
 
 class InternetConnectionMonitor extends ValueNotifier<bool> {
   InternetConnectionMonitor({
     InternetConnection? checker,
     this.onReconnect,
     this.reconnectDelay = const Duration(seconds: 1),
-  })  : _checker = checker ?? InternetConnection(),
-        super(true);
+  }) : _checker = checker ?? InternetConnection(),
+       super(true);
 
   final InternetConnection _checker;
   final VoidCallback? onReconnect;
@@ -38,12 +39,15 @@ class InternetConnectionMonitor extends ValueNotifier<bool> {
 
     _subscription = _checker.onStatusChange.listen(
       (status) => _onStatus(status == InternetStatus.connected),
-      onError: (e, st) {
+      onError: (Object e, StackTrace st) {
         // On stream error assume offline, but do not crash
         if (value != false) value = false;
         _hasInternet = false;
-        logger.error("InternetConnectionMonitor stream error",
-            error: e, stackTrace: st);
+        logger.error(
+          "InternetConnectionMonitor stream error",
+          error: e,
+          stackTrace: st,
+        );
       },
       cancelOnError: false,
     );

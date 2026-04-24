@@ -1,78 +1,40 @@
-import 'package:flutter/material.dart';
-
 class InputValidators {
   const InputValidators._();
 
-  static bool isValidEmail(String value) {
-    const String pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    return !RegExp(pattern).hasMatch(value);
-  }
+  static final RegExp _emailPattern = RegExp(
+    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
+  );
+
+  static final RegExp _phonePattern = RegExp(r'^(?:\+?[0-9]{10,15})$');
+  static final RegExp _phoneSeparators = RegExp(r'[\s\-()]');
+  static final RegExp _weakPasswordPattern = RegExp(
+    'password|123456|qwerty',
+    caseSensitive: false,
+  );
+
+  static bool isValidEmail(String value) => _emailPattern.hasMatch(value);
 
   static bool isValidPhoneNumber(String value) {
-    value = value.trim().replaceAll(RegExp(r'[\s\-()]'), '');
-    const String pattern = r'^(?:\+?[0-9]{10,15})$';
-    return !RegExp(pattern).hasMatch(value);
+    final normalized = value.trim().replaceAll(_phoneSeparators, '');
+    return _phonePattern.hasMatch(normalized);
   }
 
-  static String? validatePassword(String? password, BuildContext context) {
-    final value = password?.trim() ?? "";
-
-    if (value.isEmpty) return '';
-    if (value.length < 8) return '';
-    if (!RegExp(r'[A-Z]').hasMatch(value)) {
-      return '';
-    }
-
-    if (!RegExp(r'[a-z]').hasMatch(value)) {
-      return '';
-    }
-
-    if (!RegExp(r'[0-9]').hasMatch(value)) {
-      return '';
-    }
-    // if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-    //   return "Must contain a special character";
-    // }
-
-    if (value.contains(' ')) return '';
-    if (RegExp(r'password|123456|qwerty', caseSensitive: false)
-        .hasMatch(value)) {
-      return '';
-    }
-
-    return null;
+  static bool isStrongPassword(String password) {
+    final value = password.trim();
+    if (value.length < 8) return false;
+    if (!RegExp('[A-Z]').hasMatch(value)) return false;
+    if (!RegExp('[a-z]').hasMatch(value)) return false;
+    if (!RegExp('[0-9]').hasMatch(value)) return false;
+    if (value.contains(' ')) return false;
+    if (_weakPasswordPattern.hasMatch(value)) return false;
+    return true;
   }
 
-  static String? validatePasswordsMatch(
-      String pass, String conf, BuildContext context) {
-    if (pass.trim().isEmpty || conf.trim().isEmpty) {
-      return '';
-    }
-
-    if (pass != conf) {
-      return '';
-    }
-
-    return null;
+  static bool passwordsMatch(String a, String b) {
+    if (a.trim().isEmpty || b.trim().isEmpty) return false;
+    return a == b;
   }
 
-  static bool isTooShort(String value, int length) {
-    if (value.length < length) return true;
-    return false;
-  }
-
-  // static validateOnNumb(String value) {
-  //   String pattern = r'[0-9]';
-  //   RegExp regExp = RegExp(pattern);
-
-  //   return !regExp.hasMatch(value);
-  // }
-
-  // static patternField(String value) {
-  //   String pattern =
-  //       r'^((?:(?:[^?+*{}()[\]\\|]+|\\.|\[(?:\^?\\.|\^[^\\]|[^\\^])(?:[^\]\\]+|\\.)*\]|\((?:\?[:=!]|\?<[=!]|\?>)?(?1)??\)|\(\?(?:R|[+-]?\d+)\))(?:(?:[?+*]|\{\d*(?:,\d*)?\})[?+]?)?|\|)*)$';
-  //   RegExp regExp = RegExp(pattern);
-  //   return !regExp.hasMatch(value);
-  // }
+  static bool isLongEnough(String value, int minLength) =>
+      value.length >= minLength;
 }

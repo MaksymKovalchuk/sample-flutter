@@ -30,6 +30,11 @@
 .pub/
 /build/
 
+# Secrets / env
+.env
+.env.*
+!.env.example
+
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle

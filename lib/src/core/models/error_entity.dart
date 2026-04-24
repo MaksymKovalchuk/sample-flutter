@@ -1,20 +1,12 @@
-import 'base/base_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class ErrorEntity extends BaseModel {
-  ErrorEntity({this.error, this.detail});
+part 'error_entity.freezed.dart';
+part 'error_entity.g.dart';
 
-  String? error;
-  String? detail;
+@freezed
+abstract class ErrorEntity with _$ErrorEntity {
+  const factory ErrorEntity({String? error, String? detail}) = _ErrorEntity;
 
-  @override
-  fromJson(Map<String, dynamic>? json) {
-    if (json == null) throw const FormatException("Null JSON");
-    return ErrorEntity(
-      error: json['error'] as String?,
-      detail: json['detail'] as String?,
-    );
-  }
-
-  @override
-  Map<String, dynamic>? toJson() => null;
+  factory ErrorEntity.fromJson(Map<String, dynamic> json) =>
+      _$ErrorEntityFromJson(json);
 }

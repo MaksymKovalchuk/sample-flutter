@@ -1,23 +1,22 @@
 import 'dart:async';
+
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:sample/src/core/caches/preferences/preferences_token.dart';
 import 'package:sample/src/core/network/errors/app_exception.dart';
 import 'package:sample/src/core/network/token/token_provider.dart';
-import 'package:sample/src/core/app_initializer/app_initializer.dart';
-import 'package:sample/src/core/session/token_guard.dart';
+import 'package:sample/src/core/session/app_initializer.dart';
 import 'package:sample/src/core/session/session_manager.dart';
 import 'package:sample/src/services/logging/logger.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
 
+@lazySingleton
 class AppBloc extends Bloc<AppEvent, AppState> {
-  AppBloc(
-    this._initializer,
-    this._tokenProvider,
-    this._sessionManager,
-  ) : super(const AuthUninitialized()) {
+  AppBloc(this._initializer, this._tokenProvider, this._sessionManager)
+    : super(const AuthUninitialized()) {
     on<AppStarted>(_onAppStartedEvent);
     on<LoggedIn>(_onLoggedInEvent);
     on<LoggedOut>(_onLoggedOutEvent);
@@ -34,18 +33,22 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     AppStarted event,
     Emitter<AppState> emit,
   ) async {
-    final String? token = await TokenPreferences.accessToken();
+    final token = await TokenPreferences.accessToken();
 
     if (token != null && token.isNotEmpty) {
       try {
         await _initializeAfterLogin(emit);
+        emit(const AuthAuthenticated());
       } on SessionExpiredException catch (e) {
         await _resetSession();
         emit(const AuthUnauthenticated());
         logger.warning("Session expired on app start: ${e.message}");
       } catch (e, stack) {
-        logger.error("Unexpected error on AppStarted",
-            error: e, stackTrace: stack);
+        logger.error(
+          "Unexpected error on AppStarted",
+          error: e,
+          stackTrace: stack,
+        );
         emit(const AuthUnauthenticated());
       }
     } else {
@@ -54,13 +57,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   // Handler for the LoggedIn event.
-  Future<void> _onLoggedInEvent(
-    LoggedIn event,
-    Emitter<AppState> emit,
-  ) async {
+  Future<void> _onLoggedInEvent(LoggedIn event, Emitter<AppState> emit) async {
     emit(const AuthInProgress());
 
-    final String? token = event.token;
+    final token = event.token;
     if (token != null) {
       await TokenPreferences.setAccessToken(token);
       _tokenProvider.clearCache();
@@ -68,12 +68,14 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     try {
       await _initializeAfterLogin(emit);
+      emit(const AuthAuthenticated());
 
       if (!(event.completer?.isCompleted ?? true)) {
         event.completer?.complete();
       }
     } catch (e, _) {
       logger.warning('Login initialization failed: $e');
+      emit(const AuthUnauthenticated());
       if (!(event.completer?.isCompleted ?? true)) {
         event.completer?.completeError(e);
       }
@@ -81,7 +83,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   Future<void> _initializeAfterLogin(Emitter<AppState> emit) async {
-    TokenGuard.reset();
+    _tokenProvider.resetRecovery();
     await _initializer.initialize();
   }
 

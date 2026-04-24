@@ -1,15 +1,16 @@
-import 'package:sample/src/core/caches/preferences/preferences_settings.dart';
 import 'package:flutter/material.dart';
-import 'supported_locales.dart';
+import 'package:injectable/injectable.dart';
+import 'package:sample/src/core/caches/preferences/preferences_settings.dart';
+import 'package:sample/src/core/localization/supported_locales.dart';
 
+@lazySingleton
 class LocaleProvider extends ChangeNotifier {
-  Locale _locale = SupportedLocales.english;
-
-  Locale get locale => _locale;
-
   LocaleProvider() {
     _loadSavedLocale();
   }
+  Locale _locale = SupportedLocales.english;
+
+  Locale get locale => _locale;
 
   Future<void> _loadSavedLocale() async {
     final cachedCode = SettingsPreferences.getLanguage();

@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:sample/src/core/constants/constants.dart';
 import 'package:sample/src/core/theme/typography.dart';
-import 'package:flutter/material.dart';
 
 class StyleManager {
   const StyleManager._();
@@ -17,24 +17,28 @@ class StyleManager {
     TextDecoration? decoration,
   }) {
     final key =
-        '$fSize-${color?.value}-$weight-$width-$height-$letterSpacing-${_decorationKey(decoration)}';
+        '$fSize-${color?.toARGB32()}-$weight-$width-$height-$letterSpacing-${_decorationKey(decoration)}';
 
     return _styleCache.putIfAbsent(
-        key,
-        () => TextStyle(
-              fontSize: fSize,
-              color: color,
-              fontWeight: FontWeight.lerp(
-                  FontWeight.w100, FontWeight.w900, weight / 900),
-              letterSpacing: letterSpacing,
-              height: height,
-              decoration: decoration,
-              fontFamily: Constants.fontFamily,
-              fontVariations: [
-                FontVariation('wdth', width),
-                FontVariation('wght', weight),
-              ],
-            ));
+      key,
+      () => TextStyle(
+        fontSize: fSize,
+        color: color,
+        fontWeight: FontWeight.lerp(
+          FontWeight.w100,
+          FontWeight.w900,
+          weight / 900,
+        ),
+        letterSpacing: letterSpacing,
+        height: height,
+        decoration: decoration,
+        fontFamily: Constants.fontFamily,
+        fontVariations: [
+          FontVariation('wdth', width),
+          FontVariation('wght', weight),
+        ],
+      ),
+    );
   }
 
   static String _decorationKey(TextDecoration? decoration) {

@@ -1,19 +1,13 @@
-import 'package:sample/src/feature/tab_bar/di/tab_bar_providers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'components/tab_bar_content.dart';
+import 'package:sample/src/feature/tab_bar/components/tab_bar_content.dart';
 
 const TabPage initialTab = TabPage.home;
 
 enum TabPage { home }
 
-const tabIndexMap = {
-  TabPage.home: 0,
-};
+const tabIndexMap = {TabPage.home: 0};
 
-const indexToTabMap = {
-  0: TabPage.home,
-};
+const indexToTabMap = {0: TabPage.home};
 
 extension TabPageX on TabPage {
   int get index => indexOf(this);
@@ -22,10 +16,9 @@ extension TabPageX on TabPage {
 }
 
 class TabBarPage extends StatelessWidget {
-  const TabBarPage({super.key, required this.uuid});
+  const TabBarPage({required this.uuid, super.key});
   final String? uuid;
 
   @override
-  Widget build(BuildContext context) => MultiBlocProvider(
-      providers: getTabBarProviders(), child: TabBarContent(uuid: uuid));
+  Widget build(BuildContext context) => TabBarContent(uuid: uuid);
 }

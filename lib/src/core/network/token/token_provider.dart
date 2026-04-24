@@ -1,33 +1,53 @@
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 import 'package:sample/src/core/caches/preferences/preferences_token.dart';
 import 'package:sample/src/core/network/constants/api_endpoints.dart';
 import 'package:sample/src/core/network/constants/api_keys.dart';
 import 'package:sample/src/core/network/constants/api_router.dart';
 import 'package:sample/src/core/network/errors/app_exception.dart';
-import 'package:sample/src/core/session/token_guard.dart';
 import 'package:sample/src/services/logging/logger.dart';
-import 'package:http/http.dart' as http;
 
+@lazySingleton
 class TokenProvider {
   TokenProvider(this._client);
   final http.Client _client;
 
   String? _cachedAccessToken;
-
   Completer<String>? _refreshCompleter;
+  bool _recoveryFailed = false;
 
   bool validatingInProgress = true;
 
+  /// `true` once refresh has failed and the session cannot be recovered.
+  /// Consumers should treat this as "user must re-login".
+  bool get isRecoveryFailed => _recoveryFailed;
+
+  void _markRecoveryFailed() {
+    if (!_recoveryFailed) {
+      logger.warning("🔐 Token refresh marked as failed");
+    }
+    _recoveryFailed = true;
+  }
+
+  /// Call after a successful (re-)login to allow refresh attempts again.
+  void resetRecovery() {
+    _recoveryFailed = false;
+  }
+
   Future<String> getValidAccessToken() async {
-    if (TokenGuard.tokenRecoveryFailed) {
-      logger.warning("TokenGuard blocked getValidAccessToken");
+    if (_recoveryFailed) {
+      logger.warning("Token recovery failed — blocking getValidAccessToken");
       throw SessionExpiredException();
     }
 
     if (await isTokenExpired()) return _refreshAccessTokenSafely();
 
-    if (_cachedAccessToken != null) return _cachedAccessToken!;
+    final cached = _cachedAccessToken;
+    if (cached != null) return cached;
+
     final token = await TokenPreferences.accessToken();
     if (token == null || token.isEmpty) throw Exception("Token missing.");
 
@@ -67,15 +87,17 @@ class TokenProvider {
       'refresh_token': refreshToken,
     });
 
-    const tokenType = null;
     final tokenValue = resp[Keys.token];
-
-    if (tokenType == null || tokenValue == null) {
+    if (tokenValue is! String || tokenValue.isEmpty) {
       logger.error("Invalid token response: $resp");
       throw Exception("Token response is missing required fields.");
     }
 
-    final accessToken = [tokenType, tokenValue].whereType<String>().join(' ');
+    final tokenType = resp['token_type'] is String
+        ? resp['token_type'] as String
+        : 'Bearer';
+
+    final accessToken = '$tokenType $tokenValue';
     _cachedAccessToken = accessToken;
 
     await TokenPreferences.setAccessToken(accessToken);
@@ -96,18 +118,24 @@ class TokenProvider {
   }
 
   Future<void> saveTokenData(Map<String, dynamic> data) async {
-    await TokenPreferences.setRefreshToken(data['refresh_token']);
-    await TokenPreferences.setExpiresIn(data['expires_in']);
-    await TokenPreferences.setRefreshExpiresIn(data['refresh_expires_in']);
+    final refreshToken = data['refresh_token'] as String? ?? '';
+    final expiresIn = data['expires_in'] as int? ?? 0;
+    final refreshExpiresIn = data['refresh_expires_in'] as int? ?? 0;
+
+    await TokenPreferences.setRefreshToken(refreshToken);
+    await TokenPreferences.setExpiresIn(expiresIn);
+    await TokenPreferences.setRefreshExpiresIn(refreshExpiresIn);
     await TokenPreferences.setTokenObtainedAt(
-        DateTime.now().millisecondsSinceEpoch);
+      DateTime.now().millisecondsSinceEpoch,
+    );
   }
 
   Future<Map<String, dynamic>> authTokenRequest(
     Map<String, dynamic> body,
   ) async {
     final uri = Uri.parse(
-        "${ApiRouter.getRestUrl(ServiceType.main, envType)}${Requests.token}");
+      "${ApiRouter.getRestUrl(ServiceType.main)}${Requests.token}",
+    );
 
     final response = await _client.post(
       uri,
@@ -117,22 +145,22 @@ class TokenProvider {
 
     if (response.statusCode == 200) {
       validatingInProgress = false;
-      return json.decode(response.body);
+      return json.decode(response.body) as Map<String, dynamic>;
     }
 
     if (response.statusCode == 400) {
-      final errorBody = json.decode(response.body);
-      final error = errorBody['error'];
-      final errorDesc = errorBody['error_description'];
+      final errorBody = json.decode(response.body) as Map<String, dynamic>;
+      final error = errorBody['error'] as String?;
+      final errorDesc = errorBody['error_description'] as String?;
 
       if (error == 'invalid_grant' &&
-          errorDesc.contains('Token is not active')) {
-        TokenGuard.markInvalid();
+          (errorDesc?.contains('Token is not active') ?? false)) {
+        _markRecoveryFailed();
         throw SessionExpiredException();
       }
     }
 
-    TokenGuard.markInvalid();
+    _markRecoveryFailed();
     throw SessionExpiredException();
   }
 

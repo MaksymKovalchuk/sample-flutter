@@ -1,5 +1,5 @@
-import 'package:sample/src/services/logging/logger.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sample/src/services/logging/logger.dart';
 
 extension BlocSafeAddExtension<E, S> on Bloc<E, S> {
   void safeAdd(E event) {

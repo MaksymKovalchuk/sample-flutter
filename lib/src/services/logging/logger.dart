@@ -168,9 +168,8 @@ final class LoggerLogging extends Logger {
   void warning(Object message) => _logger.warning(message);
 
   @override
-  Stream<LogMessage> get logs => _logger.onRecord.map(
-        (record) => record.toLogMessage(),
-      );
+  Stream<LogMessage> get logs =>
+      _logger.onRecord.map((record) => record.toLogMessage());
 
   @override
   L runLogging<L>(L Function() fn, [LogOptions options = const LogOptions()]) {
@@ -182,16 +181,17 @@ final class LoggerLogging extends Logger {
     _logger.onRecord
         .where((event) => event.loggerName == 'SizzleLogger')
         .listen((event) {
-      final logMessage = event.toLogMessage();
-      final message = options.formatter?.call(logMessage, options) ??
-          _formatLoggerMessage(log: logMessage, options: options);
+          final logMessage = event.toLogMessage();
+          final message =
+              options.formatter?.call(logMessage, options) ??
+              _formatLoggerMessage(log: logMessage, options: options);
 
-      if (logMessage.logLevel.compareTo(options.level) < 0) {
-        return;
-      }
+          if (logMessage.logLevel.compareTo(options.level) < 0) {
+            return;
+          }
 
-      Zone.current.print(message);
-    });
+          Zone.current.print(message);
+        });
 
     return fn();
   }
@@ -232,32 +232,32 @@ extension on DateTime {
 extension on logging.LogRecord {
   /// Transforms [logging.LogRecord] to [LogMessage]
   LogMessage toLogMessage() => LogMessage(
-        message: message,
-        error: error,
-        stackTrace: stackTrace,
-        time: time,
-        logLevel: level.toLoggerLevel(),
-      );
+    message: message,
+    error: error,
+    stackTrace: stackTrace,
+    time: time,
+    logLevel: level.toLoggerLevel(),
+  );
 }
 
 extension on logging.Level {
   /// Transforms [logging.Level] to [LoggerLevel]
   LoggerLevel toLoggerLevel() => switch (this) {
-        logging.Level.SEVERE => LoggerLevel.error,
-        logging.Level.WARNING => LoggerLevel.warning,
-        logging.Level.INFO => LoggerLevel.info,
-        logging.Level.FINE || logging.Level.FINER => LoggerLevel.debug,
-        _ => LoggerLevel.verbose,
-      };
+    logging.Level.SEVERE => LoggerLevel.error,
+    logging.Level.WARNING => LoggerLevel.warning,
+    logging.Level.INFO => LoggerLevel.info,
+    logging.Level.FINE || logging.Level.FINER => LoggerLevel.debug,
+    _ => LoggerLevel.verbose,
+  };
 }
 
 extension on LoggerLevel {
   /// Transforms [LoggerLevel] to emoji
   String get emoji => switch (this) {
-        LoggerLevel.error => '🔥',
-        LoggerLevel.warning => '⚠️',
-        LoggerLevel.info => '💡',
-        LoggerLevel.debug => '🐛',
-        LoggerLevel.verbose => '🔬',
-      };
+    LoggerLevel.error => '🔥',
+    LoggerLevel.warning => '⚠️',
+    LoggerLevel.info => '💡',
+    LoggerLevel.debug => '🐛',
+    LoggerLevel.verbose => '🔬',
+  };
 }

@@ -1,7 +1,7 @@
-import 'package:sample/src/core/caches/preferences.dart';
-import 'package:sample/src/services/firebase/notification_manager.dart';
 import 'package:flutter/widgets.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sample/src/core/caches/preferences.dart';
+import 'package:sample/src/services/notifications/notification_manager.dart';
 
 /// Dependencies container
 @immutable
@@ -34,7 +34,8 @@ final class InitializationResult {
   final int msSpent;
 
   @override
-  String toString() => '$InitializationResult('
+  String toString() =>
+      '$InitializationResult('
       'dependencies: $dependencies, '
       'msSpent: $msSpent'
       ')';

@@ -1,6 +1,8 @@
-import 'package:sample/src/core/caches/preferences/preferences_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
+import 'package:sample/src/core/caches/preferences/preferences_settings.dart';
 
+@lazySingleton
 class AppTheme {
   AppTheme() : themeNotifier = ValueNotifier<ThemeMode>(_initialThemeMode());
 
@@ -12,8 +14,8 @@ class AppTheme {
     final mode = index == 0
         ? ThemeMode.system
         : index == 1
-            ? ThemeMode.light
-            : ThemeMode.dark;
+        ? ThemeMode.light
+        : ThemeMode.dark;
 
     themeNotifier.value = mode;
     SettingsPreferences.setDarkMode(index);

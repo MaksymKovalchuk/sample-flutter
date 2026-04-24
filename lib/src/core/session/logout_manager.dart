@@ -1,12 +1,12 @@
 import 'dart:async';
+
 import 'package:sample/src/core/caches/preferences.dart';
-import 'package:sample/src/core/navigation/core/navigation_service.dart';
-import 'package:sample/src/core/network/core/rest_client.dart';
+import 'package:sample/src/core/navigation/navigation_service.dart';
 import 'package:sample/src/core/network/errors/app_exception.dart';
+import 'package:sample/src/core/network/rest_client.dart';
 import 'package:sample/src/core/network/token/token_provider.dart';
 import 'package:sample/src/core/session/account_manager.dart';
-import 'package:sample/src/core/session/token_guard.dart';
-import 'package:sample/src/feature/widgets/app_snack_bar.dart';
+import 'package:sample/src/core/widgets/app_snack_bar.dart';
 import 'package:sample/src/services/logging/logger.dart';
 
 class LogoutManager {
@@ -58,16 +58,18 @@ class LogoutManager {
 
     _clearDataCompleter = Completer<void>();
 
-    return _clearDataInternal().then((_) {
-      _clearDataCompleter?.complete();
-    }).catchError((e, stack) {
-      _clearDataCompleter?.completeError(e, stack);
-    });
+    return _clearDataInternal()
+        .then((_) {
+          _clearDataCompleter?.complete();
+        })
+        .catchError((Object e, StackTrace stack) {
+          _clearDataCompleter?.completeError(e, stack);
+        });
   }
 
   Future<void> _clearDataInternal() async {
-    if (TokenGuard.tokenRecoveryFailed) {
-      logger.info("TokenGuard active — performing local clear only");
+    if (tokenProvider.isRecoveryFailed) {
+      logger.info("Token recovery failed — performing local clear only");
       await _clearCache();
       return;
     }
@@ -101,8 +103,11 @@ class LogoutManager {
         }
       }
     } catch (e, stack) {
-      logger.error("Logout REST call failed (ignored once)",
-          error: e, stackTrace: stack);
+      logger.error(
+        "Logout REST call failed (ignored once)",
+        error: e,
+        stackTrace: stack,
+      );
     }
   }
 

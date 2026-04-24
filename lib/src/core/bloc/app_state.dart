@@ -21,10 +21,14 @@ class AuthUnauthenticated extends AppState {
   List<Object> get props => [loggedOut];
 }
 
+class AuthAuthenticated extends AppState {
+  const AuthAuthenticated();
+}
+
 class LogoutFailure extends AppState {
   const LogoutFailure(this.message, {Object? id})
-      : id = id ?? const Object(),
-        super();
+    : id = id ?? const Object(),
+      super();
   final String message;
   final Object id;
   @override

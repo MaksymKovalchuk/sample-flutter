@@ -1,16 +1,18 @@
-import 'package:sample/src/core/app_initializer/app_initializer.dart';
+import 'package:injectable/injectable.dart';
 import 'package:sample/src/core/network/token/token_provider.dart';
+import 'package:sample/src/core/session/app_initializer.dart';
 import 'package:sample/src/core/session/logout_manager.dart';
 import 'package:sample/src/services/logging/logger.dart';
 
+@lazySingleton
 class SessionManager {
   const SessionManager({
     required AppInitializer initializer,
     required TokenProvider tokenProvider,
     required LogoutManager logoutManager,
-  })  : _initializer = initializer,
-        _tokenProvider = tokenProvider,
-        _logoutManager = logoutManager;
+  }) : _initializer = initializer,
+       _tokenProvider = tokenProvider,
+       _logoutManager = logoutManager;
 
   final AppInitializer _initializer;
   final TokenProvider _tokenProvider;

@@ -8,21 +8,17 @@ extension WidgetPaddingMarginExtension on Widget {
     double top = 0,
     double right = 0,
     double bottom = 0,
-  }) =>
-      Padding(
-        padding: EdgeInsets.only(
-          left: left,
-          top: top,
-          right: right,
-          bottom: bottom,
-        ),
-        child: this,
-      );
+  }) => Padding(
+    padding: EdgeInsets.only(
+      left: left,
+      top: top,
+      right: right,
+      bottom: bottom,
+    ),
+    child: this,
+  );
 
-  Widget paddingSymmetric({
-    double vertical = 0,
-    double horizontal = 0,
-  }) =>
+  Widget paddingSymmetric({double vertical = 0, double horizontal = 0}) =>
       Padding(
         padding: EdgeInsets.symmetric(
           vertical: vertical,
@@ -31,10 +27,8 @@ extension WidgetPaddingMarginExtension on Widget {
         child: this,
       );
 
-  Widget paddingAll(double value) => Padding(
-        padding: EdgeInsets.all(value),
-        child: this,
-      );
+  Widget paddingAll(double value) =>
+      Padding(padding: EdgeInsets.all(value), child: this);
 
   // Margin (wrap with Container)
   Widget marginOnly({
@@ -42,21 +36,12 @@ extension WidgetPaddingMarginExtension on Widget {
     double top = 0,
     double right = 0,
     double bottom = 0,
-  }) =>
-      Container(
-        margin: EdgeInsets.only(
-          left: left,
-          top: top,
-          right: right,
-          bottom: bottom,
-        ),
-        child: this,
-      );
+  }) => Container(
+    margin: EdgeInsets.only(left: left, top: top, right: right, bottom: bottom),
+    child: this,
+  );
 
-  Widget marginSymmetric({
-    double vertical = 0,
-    double horizontal = 0,
-  }) =>
+  Widget marginSymmetric({double vertical = 0, double horizontal = 0}) =>
       Container(
         margin: EdgeInsets.symmetric(
           vertical: vertical,
@@ -65,10 +50,8 @@ extension WidgetPaddingMarginExtension on Widget {
         child: this,
       );
 
-  Widget marginAll(double value) => Container(
-        margin: EdgeInsets.all(value),
-        child: this,
-      );
+  Widget marginAll(double value) =>
+      Container(margin: EdgeInsets.all(value), child: this);
 }
 
 extension ListNullSafeAdd<T> on List<T> {
@@ -87,7 +70,9 @@ class AlwaysDisabledFocusNode extends FocusNode {
 
 // Formats a string number with commas (e.g., "1000" -> "1,000")
 String comaFormat(String value) => value.replaceAllMapped(
-    RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+  RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+  (m) => '${m[1]},',
+);
 
 // Removes trailing zeros from a string number
 String zeroFormat(String value) =>
