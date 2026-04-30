@@ -1,5 +1,26 @@
 {
   "@@locale": "en",
 
-  "assetTotal": "Total"
+  "assetTotal": "Total",
+
+  "authTitle": "Welcome back",
+  "authSubtitle": "Sign in to continue",
+  "authEmailHint": "Email",
+  "authPasswordHint": "Password",
+  "authSubmit": "Sign in",
+  "authDemoHint": "Demo: enter any valid email and 6+ char password",
+
+  "homeTitle": "Home",
+  "profileTitle": "Profile",
+  "profilePlaceholder": "Your profile lives here.\nWire it up to your /me endpoint.",
+  "profileLogout": "Sign out",
+  "settingsTitle": "Settings",
+  "settingsPlaceholder": "Theme and locale switchers go here.\nSee the comment in settings_page.dart.",
+
+  "tabHome": "Home",
+  "tabProfile": "Profile",
+  "tabSettings": "Settings",
+
+  "commonRetry": "Retry",
+  "connectivityOffline": "No internet connection"
 }

@@ -52,19 +52,20 @@ class LogoutManager {
     }
   }
 
-  /// Clears local session, calls remote logout once, skips if already done.
+  /// Clears local session, calls remote logout once.
+  /// Completer is reset after each cycle so subsequent logouts re-run clearing.
   Future<void> clearData() {
     if (_clearDataCompleter != null) return _clearDataCompleter!.future;
 
-    _clearDataCompleter = Completer<void>();
+    final completer = Completer<void>();
+    _clearDataCompleter = completer;
 
-    return _clearDataInternal()
-        .then((_) {
-          _clearDataCompleter?.complete();
-        })
-        .catchError((Object e, StackTrace stack) {
-          _clearDataCompleter?.completeError(e, stack);
-        });
+    _clearDataInternal()
+        .then(completer.complete)
+        .catchError(completer.completeError)
+        .whenComplete(() => _clearDataCompleter = null);
+
+    return completer.future;
   }
 
   Future<void> _clearDataInternal() async {

@@ -1,7 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:sample/src/core/network/token/token_provider.dart';
 import 'package:sample/src/core/session/app_initializer.dart';
-import 'package:sample/src/core/session/logout_manager.dart';
 import 'package:sample/src/services/logging/logger.dart';
 
 @lazySingleton
@@ -9,15 +8,16 @@ class SessionManager {
   const SessionManager({
     required AppInitializer initializer,
     required TokenProvider tokenProvider,
-    required LogoutManager logoutManager,
   }) : _initializer = initializer,
-       _tokenProvider = tokenProvider,
-       _logoutManager = logoutManager;
+       _tokenProvider = tokenProvider;
 
   final AppInitializer _initializer;
   final TokenProvider _tokenProvider;
-  final LogoutManager _logoutManager;
 
+  /// Resets in-memory bloc-level state. Persistent storage clearing is the
+  /// responsibility of [LogoutManager.logout] (called from the UI). Calling
+  /// LogoutManager.clearData here would be a duplicate clear during the
+  /// LogoutManager → AppBloc.LoggedOut → SessionManager.resetSession chain.
   Future<void> resetSession() async {
     try {
       _initializer.reset();
@@ -29,12 +29,6 @@ class SessionManager {
       _tokenProvider.clearCache();
     } catch (e) {
       logger.warning('TokenProvider clearCache failed: $e');
-    }
-
-    try {
-      await _logoutManager.clearData();
-    } catch (e) {
-      logger.warning('LogoutManager clearData failed: $e');
     }
   }
 }

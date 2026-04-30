@@ -15,6 +15,7 @@ import 'package:sample/src/core/theme/app_theme.dart';
 import 'package:sample/src/core/theme/theme_dark.dart';
 import 'package:sample/src/core/theme/theme_light.dart';
 import 'package:sample/src/core/widgets/app_snack_bar.dart';
+import 'package:sample/src/core/widgets/offline_banner.dart';
 import 'package:sample/src/feature/app/model/dependencies.dart';
 import 'package:sample/src/feature/tab_bar/bloc/tab_bar_bloc.dart';
 import 'package:sample/src/services/device/device_info_service.dart';
@@ -102,6 +103,8 @@ class _AppState extends State<App> {
           theme: LightTheme.create(context),
           darkTheme: DarkTheme.create(context),
           themeMode: themeNotifier.value,
+          builder: (context, child) =>
+              OfflineBanner(child: child ?? const SizedBox.shrink()),
         ),
       ),
     );

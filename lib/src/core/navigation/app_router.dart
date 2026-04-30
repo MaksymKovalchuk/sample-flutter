@@ -8,6 +8,7 @@ import 'package:sample/src/core/navigation/navigation_service.dart';
 import 'package:sample/src/core/navigation/route_names.dart';
 import 'package:sample/src/core/navigation/router_refresh_stream.dart';
 import 'package:sample/src/core/navigation/transitions.dart';
+import 'package:sample/src/feature/auth/auth_page.dart';
 import 'package:sample/src/feature/tab_bar/tab_bar_page.dart';
 
 final GoRouter router = GoRouter(
@@ -27,7 +28,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: RouteNames.auth,
       pageBuilder: (context, state) =>
-          fadeTransitionPage(name: RouteNames.auth, child: const SizedBox()),
+          fadeTransitionPage(name: RouteNames.auth, child: const AuthPage()),
     ),
     GoRoute(
       path: RouteNames.tabBar,

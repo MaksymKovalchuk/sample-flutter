@@ -10,9 +10,9 @@ part of 'env.dart';
 // ignore_for_file: type=lint
 // generated_from: .env
 final class _Env {
-  static const String apiMainUrl = 'https://api.example.com/main/';
+  static const String apiMainUrl = 'https://jsonplaceholder.typicode.com';
 
-  static const String apiPortalUrl = 'https://api.example.com/portal/';
+  static const String apiPortalUrl = 'https://jsonplaceholder.typicode.com';
 
   static const String sentryDsn = '';
 }

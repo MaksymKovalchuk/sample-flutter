@@ -18,8 +18,8 @@ class AppBottomBarItem {
 
   final TabPage page;
   final String text;
-  final String icon;
-  final String iconActive;
+  final IconData icon;
+  final IconData iconActive;
 }
 
 class TabBarItem extends StatelessWidget {
@@ -27,42 +27,39 @@ class TabBarItem extends StatelessWidget {
     required this.item,
     required this.onPressed,
     required this.bloc,
-    required this.isTablet,
     super.key,
   });
 
   final AppBottomBarItem item;
   final ValueChanged<TabPage> onPressed;
   final TabBarBloc bloc;
-  final bool isTablet;
 
   @override
   Widget build(BuildContext context) => Expanded(
     child: Container(
       padding: const EdgeInsets.only(top: 10),
-      height: isTablet ? 0 : Constants.tabBarHeight,
-      width: isTablet ? Constants.tabBarWidth : 0,
+      height: Constants.tabBarHeight,
       child: Bounce(
         onPressed: () => onPressed(item.page),
         child: BlocBuilder<TabBarBloc, TabBarState>(
-          buildWhen: (previous, current) => current is TabUpdated,
+          buildWhen: (previous, current) =>
+              current is TabBarInit || current is TabUpdated,
           builder: (context, state) {
-            final isSelected = TabPage.home == item.page;
+            final currentPage = state is TabUpdated ? state.page : initialTab;
+            final isSelected = currentPage == item.page;
 
             return Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
+                Icon(
                   isSelected ? item.iconActive : item.icon,
                   color: isSelected
                       ? context.colors.cIconActiveSofter
                       : context.colors.cIconDefault,
-                  fit: BoxFit.contain,
-                  width: Constants.tabIconSize,
-                  height: Constants.tabIconSize,
+                  size: Constants.tabIconSize,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 6),
                 MediaQuery(
                   data: MediaQuery.of(
                     context,

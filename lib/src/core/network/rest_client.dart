@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sample/src/core/di/injection.dart';
@@ -14,6 +15,7 @@ import 'package:sample/src/core/network/token/token_provider.dart';
 import 'package:sample/src/core/session/app_initializer.dart';
 import 'package:sample/src/core/session/logout_manager.dart';
 import 'package:sample/src/services/helpers/retry_helper.dart';
+import 'package:sample/src/services/logging/log_redactor.dart';
 import 'package:sample/src/services/logging/logger.dart';
 
 @lazySingleton
@@ -148,8 +150,8 @@ class RestClient {
 
   void _logRequest(ApiModel apiModel, String fullUrl) {
     logger.info("Request: ${apiModel.method} $fullUrl");
-    if (apiModel.body != null) {
-      logger.debug("Body: ${jsonEncode(apiModel.body)}");
+    if (kDebugMode && apiModel.body != null) {
+      logger.debug("Body: ${jsonEncode(redactSensitive(apiModel.body))}");
     }
   }
 }

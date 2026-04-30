@@ -1,0 +1,51 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sample/src/core/di/injection.dart';
+import 'package:sample/src/core/extensions/context_extension.dart';
+import 'package:sample/src/core/theme/colors.dart';
+import 'package:sample/src/core/theme/style_manager.dart';
+import 'package:sample/src/core/theme/typography.dart';
+import 'package:sample/src/core/widgets/app_error_view.dart';
+import 'package:sample/src/feature/home/bloc/home_bloc.dart';
+import 'package:sample/src/feature/home/bloc/home_event.dart';
+import 'package:sample/src/feature/home/bloc/home_state.dart';
+import 'package:sample/src/feature/home/components/posts_list.dart';
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) => BlocProvider<HomeBloc>(
+    create: (_) => getIt<HomeBloc>()..add(const HomeStarted()),
+    child: Scaffold(
+      backgroundColor: context.colors.cBgMain,
+      appBar: AppBar(
+        backgroundColor: context.colors.cBgMain,
+        elevation: 0,
+        title: Text(
+          context.loc.homeTitle,
+          style: StyleManager.styleText(
+            fLarge18,
+            weight: semiBold,
+            color: context.colors.cTextPrimary,
+          ),
+        ),
+      ),
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state.isLoading && state.posts.isEmpty) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state.error != null && state.posts.isEmpty) {
+            return AppErrorView(
+              message: state.error!,
+              onRetry: () =>
+                  context.read<HomeBloc>().add(const HomeRefreshed()),
+            );
+          }
+          return PostsList(state: state);
+        },
+      ),
+    ),
+  );
+}

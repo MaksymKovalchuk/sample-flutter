@@ -21,6 +21,10 @@ import 'package:sample/src/core/network/checker/internet_connection_monitor.dart
     as _i880;
 import 'package:sample/src/core/network/rest/repositories/auth_repository.dart'
     as _i327;
+import 'package:sample/src/core/network/rest/repositories/login_repository.dart'
+    as _i752;
+import 'package:sample/src/core/network/rest/repositories/posts_repository.dart'
+    as _i980;
 import 'package:sample/src/core/network/rest_client.dart' as _i532;
 import 'package:sample/src/core/network/token/token_provider.dart' as _i813;
 import 'package:sample/src/core/session/account_manager.dart' as _i415;
@@ -28,6 +32,8 @@ import 'package:sample/src/core/session/app_initializer.dart' as _i899;
 import 'package:sample/src/core/session/logout_manager.dart' as _i708;
 import 'package:sample/src/core/session/session_manager.dart' as _i596;
 import 'package:sample/src/core/theme/app_theme.dart' as _i457;
+import 'package:sample/src/feature/auth/bloc/auth_bloc.dart' as _i44;
+import 'package:sample/src/feature/home/bloc/home_bloc.dart' as _i355;
 import 'package:sample/src/feature/tab_bar/bloc/tab_bar_bloc.dart' as _i924;
 import 'package:sample/src/services/notifications/notification_manager.dart'
     as _i110;
@@ -62,6 +68,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i327.AuthRepository>(
       () => _i327.AuthRepository(gh<_i532.RestClient>()),
     );
+    gh.lazySingleton<_i980.PostsRepository>(
+      () => _i980.PostsRepository(gh<_i532.RestClient>()),
+    );
+    gh.factory<_i355.HomeBloc>(
+      () => _i355.HomeBloc(gh<_i980.PostsRepository>()),
+    );
     gh.lazySingleton<_i813.TokenProvider>(
       () => _i813.TokenProvider(gh<_i519.Client>()),
     );
@@ -71,6 +83,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i813.TokenProvider>(),
         gh<_i532.RestClient>(),
         gh<_i415.AccountManager>(),
+      ),
+    );
+    gh.lazySingleton<_i752.LoginRepository>(
+      () => _i752.LoginRepository(
+        gh<_i532.RestClient>(),
+        gh<_i813.TokenProvider>(),
       ),
     );
     gh.lazySingleton<_i899.AppInitializer>(
@@ -86,7 +104,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i596.SessionManager(
         initializer: gh<_i899.AppInitializer>(),
         tokenProvider: gh<_i813.TokenProvider>(),
-        logoutManager: gh<_i708.LogoutManager>(),
       ),
     );
     gh.lazySingleton<_i829.AppBloc>(
@@ -95,6 +112,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i813.TokenProvider>(),
         gh<_i596.SessionManager>(),
       ),
+    );
+    gh.factory<_i44.AuthBloc>(
+      () => _i44.AuthBloc(gh<_i752.LoginRepository>(), gh<_i829.AppBloc>()),
     );
     return this;
   }

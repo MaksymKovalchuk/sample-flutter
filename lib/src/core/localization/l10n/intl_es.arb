@@ -1,5 +1,26 @@
 {
   "@@locale": "es",
 
-  "assetTotal": "Total"
+  "assetTotal": "Total",
+
+  "authTitle": "Bienvenido de nuevo",
+  "authSubtitle": "Inicia sesión para continuar",
+  "authEmailHint": "Correo electrónico",
+  "authPasswordHint": "Contraseña",
+  "authSubmit": "Iniciar sesión",
+  "authDemoHint": "Demo: cualquier email válido y contraseña de 6+ caracteres",
+
+  "homeTitle": "Inicio",
+  "profileTitle": "Perfil",
+  "profilePlaceholder": "Tu perfil va aquí.\nConéctalo con tu endpoint /me.",
+  "profileLogout": "Cerrar sesión",
+  "settingsTitle": "Ajustes",
+  "settingsPlaceholder": "Selectores de tema e idioma van aquí.\nVer comentario en settings_page.dart.",
+
+  "tabHome": "Inicio",
+  "tabProfile": "Perfil",
+  "tabSettings": "Ajustes",
+
+  "commonRetry": "Reintentar",
+  "connectivityOffline": "Sin conexión a internet"
 }

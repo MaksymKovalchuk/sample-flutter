@@ -103,6 +103,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total'**
   String get assetTotal;
+
+  /// No description provided for @authTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get authTitle;
+
+  /// No description provided for @authSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue'**
+  String get authSubtitle;
+
+  /// No description provided for @authEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get authEmailHint;
+
+  /// No description provided for @authPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get authPasswordHint;
+
+  /// No description provided for @authSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get authSubmit;
+
+  /// No description provided for @authDemoHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo: enter any valid email and 6+ char password'**
+  String get authDemoHint;
+
+  /// No description provided for @homeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get homeTitle;
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profileTitle;
+
+  /// No description provided for @profilePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile lives here.\nWire it up to your /me endpoint.'**
+  String get profilePlaceholder;
+
+  /// No description provided for @profileLogout.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get profileLogout;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme and locale switchers go here.\nSee the comment in settings_page.dart.'**
+  String get settingsPlaceholder;
+
+  /// No description provided for @tabHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get tabHome;
+
+  /// No description provided for @tabProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get tabProfile;
+
+  /// No description provided for @tabSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get tabSettings;
+
+  /// No description provided for @commonRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get commonRetry;
+
+  /// No description provided for @connectivityOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection'**
+  String get connectivityOffline;
 }
 
 class _AppLocalizationsDelegate

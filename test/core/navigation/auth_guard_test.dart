@@ -52,5 +52,21 @@ void main() {
       );
       expect(result, isNull);
     });
+
+    test('redirects authenticated user from /init to tabBar', () {
+      final result = AuthGuard.redirectLogic(
+        const AuthAuthenticated(),
+        RouteNames.init,
+      );
+      expect(result, RouteNames.tabBar);
+    });
+
+    test('redirects unauthenticated user from /init to auth', () {
+      final result = AuthGuard.redirectLogic(
+        const AuthUnauthenticated(),
+        RouteNames.init,
+      );
+      expect(result, RouteNames.auth);
+    });
   });
 }
