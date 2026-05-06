@@ -5,7 +5,6 @@ import 'package:sample/src/feature/app/model/dependencies.dart';
 import 'package:sample/src/services/logging/logger.dart';
 import 'package:sample/src/services/notifications/notification_manager.dart';
 
-/// Runs the one-shot initialization: DI container → dependency bundle.
 final class InitializationProcessor {
   const InitializationProcessor();
 

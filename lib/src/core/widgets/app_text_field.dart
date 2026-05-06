@@ -94,9 +94,7 @@ class _AppTextFieldState extends State<AppTextField> {
           autocorrect: false,
           enableSuggestions: false,
           onChanged: (value) {
-            if (widget.onChanged !=
-                null // &&  value != widget.controller.text
-                ) {
+            if (widget.onChanged != null) {
               widget.onChanged!(value);
             }
             setState(() {});
@@ -144,19 +142,7 @@ class _AppTextFieldState extends State<AppTextField> {
             suffixIcon: Row(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // if (widget.controller.text.isNotEmpty &&
-                //     widget.hasClearButton)
-                //   ImageButton(
-                //       size: 24,
-                //       margin: EdgeInsets.zero,
-                //       image: AppImages.close,
-                //       onPressed: () {
-                //         widget.controller.clear();
-                //         setState(() {});
-                //       }).marginOnly(top: 2),
-                widget.rightWidget ?? Container(),
-              ],
+              children: [widget.rightWidget ?? Container()],
             ).marginOnly(right: _paddingSide),
             suffixIconConstraints: BoxConstraints(
               maxHeight: widget.rightWidget == null ? 28 : 48,

@@ -7,9 +7,6 @@ import 'package:sample/src/core/theme/typography.dart';
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
-  // Placeholder. Wire AppTheme + LocaleProvider for real switchers:
-  //   getIt<AppTheme>().setTypeTheme(index);   // 0 system / 1 light / 2 dark
-  //   getIt<LocaleProvider>().setLocale(...)   // SupportedLocales.english/spanish
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: context.colors.cBgMain,

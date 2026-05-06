@@ -21,8 +21,7 @@ class TokenProvider {
 
   bool validatingInProgress = true;
 
-  /// `true` once refresh has failed and the session cannot be recovered.
-  /// Consumers should treat this as "user must re-login".
+  // true after refresh fails — caller must trigger re-login
   bool get isRecoveryFailed => _recoveryFailed;
 
   void _markRecoveryFailed() {
@@ -32,7 +31,6 @@ class TokenProvider {
     _recoveryFailed = true;
   }
 
-  /// Call after a successful (re-)login to allow refresh attempts again.
   void resetRecovery() {
     _recoveryFailed = false;
   }

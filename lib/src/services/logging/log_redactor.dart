@@ -1,7 +1,4 @@
-/// Replaces values for sensitive keys with `***` before logging request bodies.
-/// Recurses into nested maps and lists. Comparison is case-insensitive.
-///
-/// Add new keys here as they appear in your API surface.
+// add keys as they appear in your API surface
 const _sensitiveKeys = <String>{
   'password',
   'pwd',

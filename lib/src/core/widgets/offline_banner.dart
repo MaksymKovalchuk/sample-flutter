@@ -6,8 +6,6 @@ import 'package:sample/src/core/theme/colors.dart';
 import 'package:sample/src/core/theme/style_manager.dart';
 import 'package:sample/src/core/theme/typography.dart';
 
-/// Wraps the app and shows a top banner when there's no internet.
-/// Banner is reactive — appears/disappears as connectivity changes.
 class OfflineBanner extends StatelessWidget {
   const OfflineBanner({required this.child, super.key});
   final Widget child;

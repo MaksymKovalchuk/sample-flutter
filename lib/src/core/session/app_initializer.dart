@@ -23,10 +23,8 @@ class AppInitializer {
   Future<void> get ready => _readyCompleter.future;
   bool get isReady => _readyCompleter.isCompleted;
 
-  /// Ensures one-time initialization; caches the result for concurrent callers.
   Future<void> initialize() => _initFuture ??= _initializeInternal();
 
-  /// Core init logic: checks token presence, refreshes and validates it.
   Future<void> _initializeInternal() async {
     if (_isInitialized || _readyCompleter.isCompleted) return;
 
@@ -40,10 +38,10 @@ class AppInitializer {
 
     try {
       logger.info("Getting valid token...");
-      await _tokenProvider.getValidAccessToken(); // refresh if needed
+      await _tokenProvider.getValidAccessToken();
 
       logger.info("Validating token...");
-      await _validateTokenWithRetries(); // retries in case of server flakiness
+      await _validateTokenWithRetries();
 
       _readyCompleter.complete();
     } on SessionExpiredException catch (e) {
@@ -60,7 +58,6 @@ class AppInitializer {
     }
   }
 
-  /// Validates token with limited retries (default: 3).
   Future<void> _validateTokenWithRetries({int retries = 3}) async {
     for (var attempt = 0; attempt < retries; attempt++) {
       try {
@@ -77,7 +74,6 @@ class AppInitializer {
     }
   }
 
-  /// Handles errors and triggers logout if init fails.
   Future<void> _handleInitError(
     Object error, {
     required String customMessage,
@@ -93,7 +89,6 @@ class AppInitializer {
     );
   }
 
-  /// Resets state to allow re-initialization.
   void reset() {
     _isInitialized = false;
     if (_readyCompleter.isCompleted) _readyCompleter = Completer<void>();

@@ -21,18 +21,17 @@ class InternetConnectionMonitor extends ValueNotifier<bool> {
   bool _hasInternet = true;
   bool _started = false;
 
-  /// Start monitoring. Safe to call multiple times (no-op if already started).
+  // idempotent
   Future<void> start() async {
     if (_started) return;
     _started = true;
 
-    // Initialize with current connectivity
     try {
       final connected = await _checker.hasInternetAccess;
       _hasInternet = connected;
       if (value != connected) value = connected;
     } catch (_) {
-      // If probe fails, assume offline
+      // probe failed → assume offline
       _hasInternet = false;
       if (value != false) value = false;
     }
@@ -40,7 +39,7 @@ class InternetConnectionMonitor extends ValueNotifier<bool> {
     _subscription = _checker.onStatusChange.listen(
       (status) => _onStatus(status == InternetStatus.connected),
       onError: (Object e, StackTrace st) {
-        // On stream error assume offline, but do not crash
+        // stream error → assume offline, don't crash
         if (value != false) value = false;
         _hasInternet = false;
         logger.error(
@@ -54,7 +53,6 @@ class InternetConnectionMonitor extends ValueNotifier<bool> {
     logger.info("InternetConnectionMonitor started");
   }
 
-  /// Stop monitoring and free resources.
   void stop() {
     _reconnectTimer?.cancel();
     _reconnectTimer = null;
@@ -70,13 +68,11 @@ class InternetConnectionMonitor extends ValueNotifier<bool> {
   }
 
   void _onStatus(bool connected) {
-    // If state truly changed
     if (!_hasInternet && connected) {
-      // schedule reconnect confirmation; cancel older timer if any
+      // debounce reconnect — cancel any older pending timer
       _reconnectTimer?.cancel();
       _reconnectTimer = Timer(reconnectDelay, () {
-        // If still connected when timer fires
-        if (_hasInternet) return; // already processed by a newer event
+        if (_hasInternet) return; // already handled by newer event
         _hasInternet = true;
         if (value != true) value = true;
         try {
@@ -86,13 +82,10 @@ class InternetConnectionMonitor extends ValueNotifier<bool> {
         }
       });
     } else if (_hasInternet && !connected) {
-      // going offline: cancel pending reconnect, emit immediately
       _reconnectTimer?.cancel();
       _reconnectTimer = null;
       _hasInternet = false;
       if (value != false) value = false;
-    } else {
-      // No effective transition; ignore
     }
   }
 }

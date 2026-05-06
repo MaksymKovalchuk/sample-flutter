@@ -20,14 +20,11 @@ import 'package:sample/src/feature/app/model/dependencies.dart';
 import 'package:sample/src/feature/tab_bar/bloc/tab_bar_bloc.dart';
 import 'package:sample/src/services/device/device_info_service.dart';
 
-/// Root application widget. Attach by calling [App.attach].
 class App extends StatefulWidget {
   const App({required this.result, super.key});
 
   final InitializationResult result;
 
-  /// Runs this widget as the app root. Call `callback` (e.g. splash removal)
-  /// right before attaching.
   void attach([VoidCallback? callback]) {
     callback?.call();
     runApp(this);

@@ -18,7 +18,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  // Demo prefill: remove these defaults when wiring a real backend.
+  // demo prefill — drop for real backend
   static const _demoEmail = 'demo@example.com';
   static const _demoPassword = 'password1';
 

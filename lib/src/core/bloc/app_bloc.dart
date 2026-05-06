@@ -28,7 +28,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   bool isBannerVisible = false;
 
-  // Handler for the AppStarted event.
   Future<void> _onAppStartedEvent(
     AppStarted event,
     Emitter<AppState> emit,
@@ -56,7 +55,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
   }
 
-  // Handler for the LoggedIn event.
   Future<void> _onLoggedInEvent(LoggedIn event, Emitter<AppState> emit) async {
     emit(const AuthInProgress());
 
@@ -87,7 +85,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     await _initializer.initialize();
   }
 
-  // Handler for the LoggedOut event.
   Future<void> _onLoggedOutEvent(
     LoggedOut event,
     Emitter<AppState> emit,

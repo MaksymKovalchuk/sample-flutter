@@ -31,7 +31,6 @@ class RestClient {
   }) async {
     if (!bypassInitializer) await getIt<AppInitializer>().ready;
 
-    // Retrieve the base URL using the service type.
     final baseUrl = ApiRouter.getRestUrl(apiModel.serviceType);
     if (baseUrl.isEmpty) {
       logger.warning("Base URL is empty for service: ${apiModel.serviceType}");
@@ -49,12 +48,9 @@ class RestClient {
         final stopwatch = Stopwatch()..start();
 
         try {
-          // Obtain a valid token either from the provided one or fetch it.
           final token = await _getToken(apiModel.token);
-          // Build the appropriate headers for the request.
           final headers = await _buildHeaders(token, isProto);
 
-          // Create the HTTP request with method, URL, and headers.
           final request = Request(apiModel.method, Uri.parse(fullUrl))
             ..headers.addAll(headers);
           if (apiModel.body != null) {
@@ -65,19 +61,16 @@ class RestClient {
             }
           }
 
-          // Send the request and wait for a response with a timeout.
           final streamedResponse = await request.send().timeout(timeout);
           final response = await Response.fromStream(streamedResponse);
           final status = response.statusCode;
 
-          // Parse the response data accordingly.
           final parsedResponse = ResponseParser.parseResponse(
             response,
             isProto: isProto,
           );
 
           stopwatch.stop();
-          // logger.info("Request duration: ${stopwatch.elapsedMilliseconds}ms");
 
           if (_isSuccess(status)) {
             return parsedResponse as T;
@@ -96,7 +89,6 @@ class RestClient {
               throw ApiException("Unauthorized access", status: status);
             }
 
-            // Handle error responses and return an error future.
             return Future<T>.error(
               await NetworkExceptions.handleError(
                 status: status,

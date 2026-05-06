@@ -29,7 +29,7 @@ class LogoutManager {
 
   bool get isLoggingOut => _logoutCompleter != null;
 
-  /// Ensures logout logic runs only once, even if triggered multiple times.
+  // dedupes concurrent calls
   Future<void> logout({String? message, String source = 'unknown'}) async {
     if (_logoutCompleter != null) return _logoutCompleter!.future;
 
@@ -52,8 +52,7 @@ class LogoutManager {
     }
   }
 
-  /// Clears local session, calls remote logout once.
-  /// Completer is reset after each cycle so subsequent logouts re-run clearing.
+  // reset completer at end so next logout cycle runs clearing again
   Future<void> clearData() {
     if (_clearDataCompleter != null) return _clearDataCompleter!.future;
 
@@ -90,7 +89,6 @@ class LogoutManager {
     }
   }
 
-  /// Sends logout request to backend if token is valid or refreshable.
   Future<void> _safeLogoutRemote() async {
     try {
       final isExpired = await tokenProvider.isTokenExpired();
@@ -112,7 +110,6 @@ class LogoutManager {
     }
   }
 
-  /// Resets internal flags to allow next logout.
   void reset() {
     _logoutCompleter = null;
     _clearDataCompleter = null;

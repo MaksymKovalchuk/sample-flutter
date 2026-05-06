@@ -3,7 +3,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sample/src/core/caches/preferences.dart';
 import 'package:sample/src/services/notifications/notification_manager.dart';
 
-/// Dependencies container
 @immutable
 base class Dependencies {
   const Dependencies({
@@ -20,17 +19,13 @@ base class Dependencies {
   String toString() => '$packageInfo';
 }
 
-/// Result of initialization
 final class InitializationResult {
   const InitializationResult({
     required this.dependencies,
     required this.msSpent,
   });
 
-  /// The dependencies
   final Dependencies dependencies;
-
-  /// The number of milliseconds spent
   final int msSpent;
 
   @override

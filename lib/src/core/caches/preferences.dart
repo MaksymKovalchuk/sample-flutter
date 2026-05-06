@@ -10,7 +10,6 @@ class Preferences {
   final _secureStorage = const FlutterSecureStorage();
   FlutterSecureStorage get secureStorage => _secureStorage;
 
-  /// Main boxes
   static const _prefBox = PreferencesKeys.prefBox;
   static const _prefGlobalBox = PreferencesKeys.prefGlobalBox;
 
@@ -21,13 +20,11 @@ class Preferences {
     await Hive.openBox<dynamic>(_prefGlobalBox);
   }
 
-  /// Clear all local cache
   Future<void> clearCache() async {
     await TokenPreferences.clearTokens();
     await Hive.box<dynamic>(_prefBox).clear();
   }
 
-  /// Boxes API
   Box<dynamic> get prefBox => Hive.box<dynamic>(_prefBox);
   Box<dynamic> get globalBox => Hive.box<dynamic>(_prefGlobalBox);
 }

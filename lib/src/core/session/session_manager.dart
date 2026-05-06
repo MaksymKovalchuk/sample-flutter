@@ -14,10 +14,7 @@ class SessionManager {
   final AppInitializer _initializer;
   final TokenProvider _tokenProvider;
 
-  /// Resets in-memory bloc-level state. Persistent storage clearing is the
-  /// responsibility of [LogoutManager.logout] (called from the UI). Calling
-  /// LogoutManager.clearData here would be a duplicate clear during the
-  /// LogoutManager → AppBloc.LoggedOut → SessionManager.resetSession chain.
+  // in-memory only — LogoutManager.logout() owns storage clearing
   Future<void> resetSession() async {
     try {
       _initializer.reset();

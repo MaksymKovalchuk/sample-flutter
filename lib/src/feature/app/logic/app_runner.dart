@@ -11,7 +11,7 @@ import 'package:sample/src/feature/app/widget/app.dart';
 import 'package:sample/src/feature/app/widget/splash_error_app.dart';
 import 'package:sample/src/services/logging/logger.dart';
 
-/// Bootstraps the app: splash → error handling → BLoC → DI → App root.
+// splash → error handling → BLoC → DI → App root
 final class AppRunner {
   const AppRunner();
 

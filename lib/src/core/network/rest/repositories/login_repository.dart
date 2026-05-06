@@ -10,21 +10,7 @@ class LoginRepository {
   final RestClient _restClient;
   final TokenProvider _tokenProvider;
 
-  // Demo stub: returns a fake bearer token after a short delay,
-  // and persists fake expiry metadata so AppInitializer doesn't trigger refresh.
-  //
-  // Real implementation:
-  //   final resp = await _restClient.request<Map<String, dynamic>>(
-  //     bypassInitializer: true,
-  //     apiModel: ApiModel(
-  //       serviceType: ServiceType.main,
-  //       method: Method.post,
-  //       pathUrl: Requests.login,
-  //       body: {'email': email, 'password': password},
-  //     ),
-  //   );
-  //   await _tokenProvider.saveTokenData(resp);  // saves refresh_token, expires_in
-  //   return resp['access_token'] as String;
+  // stub — fake token + fake expiry; replace with real /auth/login + saveTokenData
   Future<String> login({
     required String email,
     required String password,

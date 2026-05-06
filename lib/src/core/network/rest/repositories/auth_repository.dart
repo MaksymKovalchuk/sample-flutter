@@ -7,8 +7,7 @@ class AuthRepository {
   // ignore: unused_field
   final RestClient _restClient;
 
-  // Demo stub: real implementation should hit a /me or /validate endpoint
-  // and throw SessionExpiredException on 401. See AppInitializer for caller.
+  // stub — wire up real /me when backend is ready
   Future<void> validateToken() async {
     await Future<void>.delayed(const Duration(milliseconds: 50));
   }

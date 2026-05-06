@@ -11,8 +11,7 @@ class PostsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Scaffold(extendBody: true) already adds the bottomNavigationBar height
-    // into MediaQuery.padding.bottom — just reuse it + small breathing room.
+    // extendBody:true already bakes nav-bar height into padding.bottom
     final bottomInset = MediaQuery.of(context).padding.bottom + 8;
 
     return RefreshIndicator(

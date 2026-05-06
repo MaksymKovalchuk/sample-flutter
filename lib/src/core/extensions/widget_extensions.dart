@@ -62,18 +62,16 @@ extension ListNullSafeAdd<T> on List<T> {
   }
 }
 
-// Custom FocusNode that is always disabled
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;
 }
 
-// Formats a string number with commas (e.g., "1000" -> "1,000")
+// "1000" -> "1,000"
 String comaFormat(String value) => value.replaceAllMapped(
   RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
   (m) => '${m[1]},',
 );
 
-// Removes trailing zeros from a string number
 String zeroFormat(String value) =>
     value.replaceAll(RegExp(r'([.]*00)(?!.*\d)'), '');

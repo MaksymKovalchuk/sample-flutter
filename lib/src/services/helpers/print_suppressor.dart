@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 
-/// Utility to suppress noisy console logs globally (e.g. iOS WebView headers)
+// suppresses noisy iOS WebView header logs
 class PrintSuppressor {
   const PrintSuppressor._();
 
-  /// Returns a ZoneSpecification that filters out matching console lines
   static ZoneSpecification zoneSpec({List<String>? customFilters}) {
     if (kReleaseMode) return const ZoneSpecification(); // Do nothing in release
 

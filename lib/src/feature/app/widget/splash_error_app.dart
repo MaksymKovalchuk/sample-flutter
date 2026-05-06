@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Fallback UI shown when the app's one-shot initialization fails.
-/// Displays the error and offers a retry button when a retry callback is given.
 class SplashErrorApp extends StatefulWidget {
   const SplashErrorApp({
     required this.error,

@@ -6,29 +6,17 @@ import 'package:logging/logging.dart' as logging;
 
 final Logger logger = LoggerLogging();
 
-/// Typedef for the log formatter
 typedef LogFormatter = String Function(LogMessage message, LogOptions options);
 
-/// Possible levels of logging
 enum LoggerLevel implements Comparable<LoggerLevel> {
-  /// Error level
   error._(1000),
-
-  /// Warning level
   warning._(800),
-
-  /// Info level
   info._(600),
-
-  /// Debug level
   debug._(400),
-
-  /// Verbose level
   verbose._(200);
 
   const LoggerLevel._(this.value);
 
-  /// Value of the level
   final int value;
 
   @override
@@ -47,19 +35,10 @@ base class LogOptions {
     this.formatter,
   });
 
-  /// Log level
   final LoggerLevel level;
-
-  /// Whether to show time
   final bool showTime;
-
-  /// Whether to show emoji
   final bool showEmoji;
-
-  /// Whether to log in release mode
   final bool logInRelease;
-
-  /// Formatter for the log message
   final LogFormatter? formatter;
 }
 
@@ -72,46 +51,24 @@ base class LogMessage {
     this.time,
   });
 
-  /// Log message
   final Object message;
-
-  /// Log Error
   final Object? error;
-
-  /// Stack trace
   final StackTrace? stackTrace;
-
-  /// Time of the log
   final DateTime? time;
-
-  /// Log level
   final LoggerLevel logLevel;
 }
 
-/// Logger interface
 abstract base class Logger {
-  /// Logs the error to the console
   void error(Object message, {Object? error, StackTrace? stackTrace});
-
-  /// Logs the warning to the console
   void warning(Object message);
-
-  /// Logs the info to the console
   void info(Object message);
-
-  /// Logs the debug to the console
   void debug(Object message);
-
-  /// Logs the verbose to the console
   void verbose(Object message);
 
-  /// Set up the logger
   L runLogging<L>(L Function() fn, [LogOptions options = const LogOptions()]);
 
-  /// Stream of logs
   Stream<LogMessage> get logs;
 
-  /// Handy method to log zoneError
   void logZoneError(Object error, StackTrace stackTrace) {
     if (error is PlatformException && error.code == 'recreating_view') {
       logger.warning("Caught recreating_view PlatformException");
@@ -121,7 +78,6 @@ abstract base class Logger {
     this.error('Zone error: $error', error: error, stackTrace: stackTrace);
   }
 
-  /// Handy method to log [FlutterError]
   void logFlutterError(FlutterErrorDetails details) {
     if (details.silent) {
       return;
@@ -136,7 +92,6 @@ abstract base class Logger {
     );
   }
 
-  /// Handy method to log [PlatformDispatcher] error
   bool logPlatformDispatcherError(Object error, StackTrace stackTrace) {
     this.error(
       'Platform Dispatcher Error: $error',
@@ -147,7 +102,6 @@ abstract base class Logger {
   }
 }
 
-/// Default logger using logging package
 final class LoggerLogging extends Logger {
   final _logger = logging.Logger('SizzleLogger');
 
@@ -224,13 +178,11 @@ String _formatLoggerMessage({
 }
 
 extension on DateTime {
-  /// Transforms DateTime to String with format: 00:00:00
   String formatTime() =>
       [hour, minute, second].map((i) => i.toString().padLeft(2, '0')).join(':');
 }
 
 extension on logging.LogRecord {
-  /// Transforms [logging.LogRecord] to [LogMessage]
   LogMessage toLogMessage() => LogMessage(
     message: message,
     error: error,
@@ -241,7 +193,6 @@ extension on logging.LogRecord {
 }
 
 extension on logging.Level {
-  /// Transforms [logging.Level] to [LoggerLevel]
   LoggerLevel toLoggerLevel() => switch (this) {
     logging.Level.SEVERE => LoggerLevel.error,
     logging.Level.WARNING => LoggerLevel.warning,
@@ -252,7 +203,6 @@ extension on logging.Level {
 }
 
 extension on LoggerLevel {
-  /// Transforms [LoggerLevel] to emoji
   String get emoji => switch (this) {
     LoggerLevel.error => '🔥',
     LoggerLevel.warning => '⚠️',
