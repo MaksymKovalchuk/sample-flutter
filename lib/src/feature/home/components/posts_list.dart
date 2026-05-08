@@ -7,7 +7,7 @@ import 'package:sample/src/feature/home/components/post_card.dart';
 
 class PostsList extends StatelessWidget {
   const PostsList({required this.state, super.key});
-  final HomeState state;
+  final HomeSuccess state;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class PostsList extends StatelessWidget {
       onRefresh: () async {
         context.read<HomeBloc>().add(const HomeRefreshed());
         await context.read<HomeBloc>().stream.firstWhere(
-          (s) => !s.isRefreshing,
+          (s) => s is! HomeSuccess || !s.isRefreshing,
         );
       },
       child: ListView.separated(

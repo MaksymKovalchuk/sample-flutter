@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:injectable/injectable.dart';
 import 'package:sample/src/core/caches/preferences/preferences_token.dart';
 import 'package:sample/src/core/di/injection.dart';
 import 'package:sample/src/core/network/errors/app_exception.dart';
@@ -9,7 +8,6 @@ import 'package:sample/src/core/network/token/token_provider.dart';
 import 'package:sample/src/core/session/logout_manager.dart';
 import 'package:sample/src/services/logging/logger.dart';
 
-@lazySingleton
 class AppInitializer {
   AppInitializer(this._authRepository, this._tokenProvider);
   final AuthRepository _authRepository;
@@ -83,7 +81,7 @@ class AppInitializer {
     }
 
     logger.error("AppInitializer failed", error: error);
-    await getIt<LogoutManager>().logout(
+    await locator<LogoutManager>().logout(
       message: customMessage,
       source: 'AppInitializer',
     );

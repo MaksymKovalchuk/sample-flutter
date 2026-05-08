@@ -14,7 +14,7 @@ import 'package:sample/src/feature/tab_bar/tab_bar_page.dart';
 final GoRouter router = GoRouter(
   navigatorKey: rootNavigatorKey,
   initialLocation: RouteNames.init,
-  refreshListenable: GoRouterRefreshStream(getIt<AppBloc>().stream),
+  refreshListenable: GoRouterRefreshStream(locator<AppBloc>().stream),
   redirect: (context, state) {
     final appState = context.read<AppBloc>().state;
     return AuthGuard.redirectLogic(appState, state.uri.path);

@@ -15,7 +15,7 @@ class NetworkExceptions {
     logger.warning("HTTP $status → $pathUrl");
 
     if (status == 401) {
-      await getIt<LogoutManager>().logout(
+      await locator<LogoutManager>().logout(
         message: "Session expired. Please log in again.",
         source: 'NetworkExceptions',
       );

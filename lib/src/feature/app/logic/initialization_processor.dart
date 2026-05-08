@@ -12,16 +12,16 @@ final class InitializationProcessor {
     final stopwatch = Stopwatch()..start();
 
     logger.info('Initializing dependencies...');
-    await configureDependencies();
+    await setupLocator();
     logger.info('Dependencies initialized');
 
     stopwatch.stop();
 
     return InitializationResult(
       dependencies: Dependencies(
-        notifications: getIt<NotificationManager>(),
-        preferences: getIt<Preferences>(),
-        packageInfo: getIt<PackageInfo>(),
+        notifications: locator<NotificationManager>(),
+        preferences: locator<Preferences>(),
+        packageInfo: locator<PackageInfo>(),
       ),
       msSpent: stopwatch.elapsedMilliseconds,
     );

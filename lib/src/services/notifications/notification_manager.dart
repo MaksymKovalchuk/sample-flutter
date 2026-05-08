@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:injectable/injectable.dart';
 
-@lazySingleton
 class NotificationManager {
   NotificationManager()
     : navigatorKey = GlobalKey<NavigatorState>(),

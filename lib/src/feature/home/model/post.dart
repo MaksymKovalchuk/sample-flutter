@@ -1,16 +1,25 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 
-part 'post.freezed.dart';
-part 'post.g.dart';
+class Post extends Equatable {
+  const Post({
+    required this.id,
+    required this.userId,
+    required this.title,
+    required this.body,
+  });
 
-@freezed
-abstract class Post with _$Post {
-  const factory Post({
-    required int id,
-    required int userId,
-    required String title,
-    required String body,
-  }) = _Post;
+  factory Post.fromJson(Map<String, dynamic> json) => Post(
+    id: json['id'] as int,
+    userId: json['userId'] as int,
+    title: json['title'] as String,
+    body: json['body'] as String,
+  );
 
-  factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
+  final int id;
+  final int userId;
+  final String title;
+  final String body;
+
+  @override
+  List<Object?> get props => [id, userId, title, body];
 }

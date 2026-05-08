@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:injectable/injectable.dart';
 import 'package:sample/src/core/caches/preferences/preferences_token.dart';
 import 'package:sample/src/core/network/errors/app_exception.dart';
 import 'package:sample/src/core/network/token/token_provider.dart';
@@ -13,7 +12,6 @@ import 'package:sample/src/services/logging/logger.dart';
 part 'app_event.dart';
 part 'app_state.dart';
 
-@lazySingleton
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc(this._initializer, this._tokenProvider, this._sessionManager)
     : super(const AuthUninitialized()) {

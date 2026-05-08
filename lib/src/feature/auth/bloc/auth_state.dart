@@ -1,19 +1,38 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 import 'package:sample/src/services/validators/input_validators.dart';
 
-part 'auth_state.freezed.dart';
+sealed class AuthState extends Equatable {
+  const AuthState();
+}
 
-@freezed
-abstract class AuthState with _$AuthState {
-  const factory AuthState({
-    @Default('') String email,
-    @Default('') String password,
-    @Default(false) bool isLoading,
-    String? error,
-  }) = _AuthState;
+final class AuthIdle extends AuthState {
+  const AuthIdle({this.email = '', this.password = '', this.error});
 
-  const AuthState._();
+  final String email;
+  final String password;
+  final String? error;
 
   bool get isFormValid =>
       InputValidators.isValidEmail(email) && password.length >= 6;
+
+  AuthIdle copyWith({
+    String? email,
+    String? password,
+    String? error,
+    bool clearError = false,
+  }) => AuthIdle(
+    email: email ?? this.email,
+    password: password ?? this.password,
+    error: clearError ? null : (error ?? this.error),
+  );
+
+  @override
+  List<Object?> get props => [email, password, error];
+}
+
+final class AuthSubmitting extends AuthState {
+  const AuthSubmitting();
+
+  @override
+  List<Object?> get props => const [];
 }

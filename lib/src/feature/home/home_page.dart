@@ -5,18 +5,18 @@ import 'package:sample/src/core/extensions/context_extension.dart';
 import 'package:sample/src/core/theme/colors.dart';
 import 'package:sample/src/core/theme/style_manager.dart';
 import 'package:sample/src/core/theme/typography.dart';
-import 'package:sample/src/core/widgets/app_error_view.dart';
 import 'package:sample/src/feature/home/bloc/home_bloc.dart';
 import 'package:sample/src/feature/home/bloc/home_event.dart';
 import 'package:sample/src/feature/home/bloc/home_state.dart';
 import 'package:sample/src/feature/home/components/posts_list.dart';
+import 'package:sample/src/feature/widgets/app_error_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) => BlocProvider<HomeBloc>(
-    create: (_) => getIt<HomeBloc>()..add(const HomeStarted()),
+    create: (_) => locator<HomeBloc>()..add(const HomeStarted()),
     child: Scaffold(
       backgroundColor: context.colors.cBgMain,
       appBar: AppBar(
@@ -32,18 +32,14 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
-        builder: (context, state) {
-          if (state.isLoading && state.posts.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (state.error != null && state.posts.isEmpty) {
-            return AppErrorView(
-              message: state.error!,
-              onRetry: () =>
-                  context.read<HomeBloc>().add(const HomeRefreshed()),
-            );
-          }
-          return PostsList(state: state);
+        builder: (context, state) => switch (state) {
+          HomeInitial() ||
+          HomeLoading() => const Center(child: CircularProgressIndicator()),
+          HomeFailure(:final message) => AppErrorView(
+            message: message,
+            onRetry: () => context.read<HomeBloc>().add(const HomeRefreshed()),
+          ),
+          HomeSuccess() => PostsList(state: state),
         },
       ),
     ),

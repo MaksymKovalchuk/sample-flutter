@@ -47,7 +47,7 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(height: 32),
             TextButton.icon(
               onPressed: () =>
-                  getIt<LogoutManager>().logout(source: 'ProfilePage'),
+                  locator<LogoutManager>().logout(source: 'ProfilePage'),
               icon: Icon(Icons.logout, color: context.colors.cStatusError),
               label: Text(
                 context.loc.profileLogout,

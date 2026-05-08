@@ -1,16 +1,20 @@
 part of 'tab_bar_bloc.dart';
 
-abstract class TabBarEvent extends Equatable {
+sealed class TabBarEvent extends Equatable {
   const TabBarEvent();
-  @override
-  List<Object> get props => [];
 }
 
-class InitTabBar extends TabBarEvent {}
+final class InitTabBar extends TabBarEvent {
+  const InitTabBar();
 
-class TabSelected extends TabBarEvent {
+  @override
+  List<Object?> get props => const [];
+}
+
+final class TabSelected extends TabBarEvent {
   const TabSelected(this.page);
   final TabPage page;
+
   @override
-  List<Object> get props => [page];
+  List<Object?> get props => [page];
 }

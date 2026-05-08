@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:injectable/injectable.dart';
 import 'package:sample/src/core/caches/preferences/preferences_token.dart';
 import 'package:sample/src/core/network/constants/api_endpoints.dart';
 import 'package:sample/src/core/network/constants/api_keys.dart';
@@ -10,7 +9,6 @@ import 'package:sample/src/core/network/constants/api_router.dart';
 import 'package:sample/src/core/network/errors/app_exception.dart';
 import 'package:sample/src/services/logging/logger.dart';
 
-@lazySingleton
 class TokenProvider {
   TokenProvider(this._client);
   final http.Client _client;

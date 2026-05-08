@@ -6,7 +6,7 @@ import 'package:sample/src/core/network/errors/app_exception.dart';
 import 'package:sample/src/core/network/rest_client.dart';
 import 'package:sample/src/core/network/token/token_provider.dart';
 import 'package:sample/src/core/session/account_manager.dart';
-import 'package:sample/src/core/widgets/app_snack_bar.dart';
+import 'package:sample/src/feature/widgets/app_snack_bar.dart';
 import 'package:sample/src/services/logging/logger.dart';
 
 class LogoutManager {

@@ -1,12 +1,16 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 
-part 'error_entity.freezed.dart';
-part 'error_entity.g.dart';
+class ErrorEntity extends Equatable {
+  const ErrorEntity({this.error, this.detail});
 
-@freezed
-abstract class ErrorEntity with _$ErrorEntity {
-  const factory ErrorEntity({String? error, String? detail}) = _ErrorEntity;
+  factory ErrorEntity.fromJson(Map<String, dynamic> json) => ErrorEntity(
+    error: json['error'] as String?,
+    detail: json['detail'] as String?,
+  );
 
-  factory ErrorEntity.fromJson(Map<String, dynamic> json) =>
-      _$ErrorEntityFromJson(json);
+  final String? error;
+  final String? detail;
+
+  @override
+  List<Object?> get props => [error, detail];
 }

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:injectable/injectable.dart';
 import 'package:sample/src/core/session/app_initializer.dart';
 import 'package:sample/src/feature/tab_bar/tab_bar_page.dart';
 import 'package:sample/src/services/logging/logger.dart';
@@ -10,9 +9,8 @@ import 'package:sample/src/services/logging/logger.dart';
 part 'tab_bar_event.dart';
 part 'tab_bar_state.dart';
 
-@injectable
 class TabBarBloc extends Bloc<TabBarEvent, TabBarState> {
-  TabBarBloc(this._initializer) : super(TabBarInit()) {
+  TabBarBloc(this._initializer) : super(const TabBarInit()) {
     on<InitTabBar>(_onInitTabBar);
     on<TabSelected>(_onPageTappedEvent);
   }

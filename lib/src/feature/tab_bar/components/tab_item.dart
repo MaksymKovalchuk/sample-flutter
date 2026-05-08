@@ -4,9 +4,9 @@ import 'package:sample/src/core/constants/constants.dart';
 import 'package:sample/src/core/theme/colors.dart';
 import 'package:sample/src/core/theme/style_manager.dart';
 import 'package:sample/src/core/theme/typography.dart';
-import 'package:sample/src/core/widgets/bounce.dart';
 import 'package:sample/src/feature/tab_bar/bloc/tab_bar_bloc.dart';
 import 'package:sample/src/feature/tab_bar/tab_bar_page.dart';
+import 'package:sample/src/feature/widgets/bounce.dart';
 
 class AppBottomBarItem {
   AppBottomBarItem({

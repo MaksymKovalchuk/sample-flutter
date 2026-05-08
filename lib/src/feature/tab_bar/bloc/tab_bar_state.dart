@@ -1,18 +1,20 @@
 part of 'tab_bar_bloc.dart';
 
-abstract class TabBarState extends Equatable {
+sealed class TabBarState extends Equatable {
   const TabBarState();
-  @override
-  List<Object> get props => [];
 }
 
-class TabBarInit extends TabBarState {}
+final class TabBarInit extends TabBarState {
+  const TabBarInit();
 
-class TabUpdated extends TabBarState {
+  @override
+  List<Object?> get props => const [];
+}
+
+final class TabUpdated extends TabBarState {
   const TabUpdated(this.page);
   final TabPage page;
+
   @override
-  List<Object> get props => [page];
-  @override
-  String toString() => 'TabUpdated(page: $page)';
+  List<Object?> get props => [page];
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:sample/src/core/caches/preferences/preferences_settings.dart';
 
-@lazySingleton
 class AppTheme {
   AppTheme() : themeNotifier = ValueNotifier<ThemeMode>(_initialThemeMode());
 

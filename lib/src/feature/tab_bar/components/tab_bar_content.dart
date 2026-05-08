@@ -26,7 +26,7 @@ class _TabBarContentState extends State<TabBarContent> {
   void initState() {
     super.initState();
     _tabBloc = context.read<TabBarBloc>();
-    _tabBloc.add(InitTabBar());
+    _tabBloc.add(const InitTabBar());
   }
 
   @override

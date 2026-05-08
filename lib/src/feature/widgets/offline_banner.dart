@@ -12,7 +12,7 @@ class OfflineBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final monitor = getIt<InternetConnectionMonitor>();
+    final monitor = locator<InternetConnectionMonitor>();
     return Stack(
       children: [
         child,

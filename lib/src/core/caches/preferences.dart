@@ -5,7 +5,7 @@ import 'package:sample/src/core/caches/preferences/preferences_token.dart';
 import 'package:sample/src/core/di/injection.dart';
 
 class Preferences {
-  static Preferences get to => getIt<Preferences>();
+  static Preferences get to => locator<Preferences>();
 
   final _secureStorage = const FlutterSecureStorage();
   FlutterSecureStorage get secureStorage => _secureStorage;

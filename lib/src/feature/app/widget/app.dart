@@ -14,10 +14,10 @@ import 'package:sample/src/core/navigation/route_names.dart';
 import 'package:sample/src/core/theme/app_theme.dart';
 import 'package:sample/src/core/theme/theme_dark.dart';
 import 'package:sample/src/core/theme/theme_light.dart';
-import 'package:sample/src/core/widgets/app_snack_bar.dart';
-import 'package:sample/src/core/widgets/offline_banner.dart';
 import 'package:sample/src/feature/app/model/dependencies.dart';
 import 'package:sample/src/feature/tab_bar/bloc/tab_bar_bloc.dart';
+import 'package:sample/src/feature/widgets/app_snack_bar.dart';
+import 'package:sample/src/feature/widgets/offline_banner.dart';
 import 'package:sample/src/services/device/device_info_service.dart';
 
 class App extends StatefulWidget {
@@ -62,9 +62,9 @@ class _AppState extends State<App> {
     child: MultiBlocProvider(
       providers: [
         BlocProvider<AppBloc>(
-          create: (_) => getIt<AppBloc>()..add(AppStarted()),
+          create: (_) => locator<AppBloc>()..add(AppStarted()),
         ),
-        BlocProvider<TabBarBloc>(create: (_) => getIt<TabBarBloc>()),
+        BlocProvider<TabBarBloc>(create: (_) => locator<TabBarBloc>()),
       ],
       child: BlocListener<AppBloc, AppState>(
         listenWhen: (previous, current) =>
@@ -84,8 +84,8 @@ class _AppState extends State<App> {
   );
 
   Widget _buildMaterialApp() {
-    final themeNotifier = getIt<AppTheme>().themeNotifier;
-    final localeProvider = getIt<LocaleProvider>();
+    final themeNotifier = locator<AppTheme>().themeNotifier;
+    final localeProvider = locator<LocaleProvider>();
 
     return AnimatedBuilder(
       animation: Listenable.merge([themeNotifier, localeProvider]),

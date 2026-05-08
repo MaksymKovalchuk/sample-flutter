@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
-import 'package:injectable/injectable.dart';
 import 'package:sample/src/core/di/injection.dart';
 import 'package:sample/src/core/network/api_model.dart';
 import 'package:sample/src/core/network/constants/api_keys.dart';
@@ -18,7 +17,6 @@ import 'package:sample/src/services/helpers/retry_helper.dart';
 import 'package:sample/src/services/logging/log_redactor.dart';
 import 'package:sample/src/services/logging/logger.dart';
 
-@lazySingleton
 class RestClient {
   const RestClient();
 
@@ -29,7 +27,7 @@ class RestClient {
     bool bypassInitializer = false,
     Duration timeout = const Duration(seconds: 10),
   }) async {
-    if (!bypassInitializer) await getIt<AppInitializer>().ready;
+    if (!bypassInitializer) await locator<AppInitializer>().ready;
 
     final baseUrl = ApiRouter.getRestUrl(apiModel.serviceType);
     if (baseUrl.isEmpty) {
@@ -78,7 +76,7 @@ class RestClient {
             if (status == 401) {
               logger.info("Unauthorized (401) for $fullUrl");
 
-              if (getIt<LogoutManager>().isLoggingOut) {
+              if (locator<LogoutManager>().isLoggingOut) {
                 logger.info("Ignored 401 during logout");
                 throw ApiException(
                   "Unauthorized during logout",
@@ -101,8 +99,8 @@ class RestClient {
           logger.warning("Timeout for $fullUrl after ${timeout.inSeconds}s");
           throw ApiException("Request timed out", status: 408);
         } on SessionExpiredException catch (e) {
-          if (!getIt<LogoutManager>().isLoggingOut) {
-            await getIt<LogoutManager>().logout(
+          if (!locator<LogoutManager>().isLoggingOut) {
+            await locator<LogoutManager>().logout(
               message: e.message,
               source: 'RestClient',
             );
@@ -126,7 +124,7 @@ class RestClient {
     if (token.isNotEmpty) return token;
 
     try {
-      return await getIt<TokenProvider>().getValidAccessToken();
+      return await locator<TokenProvider>().getValidAccessToken();
     } on SessionExpiredException catch (_) {
       rethrow;
     }

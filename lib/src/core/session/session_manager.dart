@@ -1,9 +1,7 @@
-import 'package:injectable/injectable.dart';
 import 'package:sample/src/core/network/token/token_provider.dart';
 import 'package:sample/src/core/session/app_initializer.dart';
 import 'package:sample/src/services/logging/logger.dart';
 
-@lazySingleton
 class SessionManager {
   const SessionManager({
     required AppInitializer initializer,

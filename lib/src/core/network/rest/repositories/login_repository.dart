@@ -1,9 +1,7 @@
-import 'package:injectable/injectable.dart';
 import 'package:sample/src/core/network/errors/app_exception.dart';
 import 'package:sample/src/core/network/rest_client.dart';
 import 'package:sample/src/core/network/token/token_provider.dart';
 
-@lazySingleton
 class LoginRepository {
   LoginRepository(this._restClient, this._tokenProvider);
   // ignore: unused_field
