@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:sample/src/core/bloc/app_bloc.dart';
-import 'package:sample/src/core/di/injection.dart';
+import 'package:sample/src/core/di/locator.dart';
 import 'package:sample/src/core/localization/l10n/app_localizations.dart';
 import 'package:sample/src/core/localization/locale_provider.dart';
 import 'package:sample/src/core/localization/supported_locales.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sample/src/core/bloc/app_bloc.dart';
-import 'package:sample/src/core/di/injection.dart';
+import 'package:sample/src/core/di/locator.dart';
 import 'package:sample/src/core/navigation/auth_guard.dart';
 import 'package:sample/src/core/navigation/navigation_service.dart';
 import 'package:sample/src/core/navigation/route_names.dart';

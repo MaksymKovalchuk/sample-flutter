@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sample/src/core/bloc/app_bloc.dart';
 import 'package:sample/src/core/caches/preferences.dart';
-import 'package:sample/src/core/di/injection.dart';
+import 'package:sample/src/core/di/locator.dart';
 import 'package:sample/src/core/localization/locale_provider.dart';
 import 'package:sample/src/core/network/checker/internet_connection_monitor.dart';
 import 'package:sample/src/core/network/rest/repositories/auth_repository.dart';

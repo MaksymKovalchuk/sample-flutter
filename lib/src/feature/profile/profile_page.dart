@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sample/src/core/di/injection.dart';
+import 'package:sample/src/core/di/locator.dart';
 import 'package:sample/src/core/extensions/context_extension.dart';
 import 'package:sample/src/core/session/logout_manager.dart';
 import 'package:sample/src/core/theme/colors.dart';

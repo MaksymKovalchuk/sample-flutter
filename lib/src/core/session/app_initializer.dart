@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:sample/src/core/caches/preferences/preferences_token.dart';
-import 'package:sample/src/core/di/injection.dart';
+import 'package:sample/src/core/di/locator.dart';
 import 'package:sample/src/core/network/errors/app_exception.dart';
 import 'package:sample/src/core/network/rest/repositories/auth_repository.dart';
 import 'package:sample/src/core/network/token/token_provider.dart';

@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
-import 'package:sample/src/core/di/injection.dart';
+import 'package:sample/src/core/di/locator.dart';
 import 'package:sample/src/core/network/api_model.dart';
 import 'package:sample/src/core/network/constants/api_keys.dart';
 import 'package:sample/src/core/network/constants/api_router.dart';

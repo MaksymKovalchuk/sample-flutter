@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sample/src/core/di/injection.dart';
+import 'package:sample/src/core/di/locator.dart';
 import 'package:sample/src/core/extensions/context_extension.dart';
 import 'package:sample/src/core/theme/colors.dart';
 import 'package:sample/src/core/theme/style_manager.dart';

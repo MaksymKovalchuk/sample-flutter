@@ -1,4 +1,4 @@
-import 'package:sample/src/core/di/injection.dart';
+import 'package:sample/src/core/di/locator.dart';
 import 'package:sample/src/core/network/errors/app_exception.dart';
 import 'package:sample/src/core/network/response_parser.dart';
 import 'package:sample/src/core/session/logout_manager.dart';

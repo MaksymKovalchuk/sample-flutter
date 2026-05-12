@@ -2,7 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:sample/src/core/caches/preferences/preferences_keys.dart';
 import 'package:sample/src/core/caches/preferences/preferences_token.dart';
-import 'package:sample/src/core/di/injection.dart';
+import 'package:sample/src/core/di/locator.dart';
 
 class Preferences {
   static Preferences get to => locator<Preferences>();
