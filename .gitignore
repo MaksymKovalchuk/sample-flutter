@@ -12,6 +12,9 @@
 # Claude Code
 .claude/settings.local.json
 
+# Private working notes (Claude session context — not for commit)
+notes/
+
 # IntelliJ related
 *.iml
 *.ipr
